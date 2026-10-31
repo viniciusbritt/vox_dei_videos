@@ -1,7 +1,7 @@
 # Agente diário da Vox Dei
 
-Roda todo dia às 5h03 (Brasília). Produz os 2 Shorts do **dia seguinte** (7h e 20h) e deixa tudo pronto para a Helo aprovar.
-Regra fixa: **nada é agendado nem publicado sem a aprovação da Helo.**
+Roda todo dia às 5h03 (Brasília). Produz e **agenda** os 2 Shorts do **dia seguinte** (7h e 20h).
+A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada depois e pode pedir mudanças pelo campo `recadoHelo` da agenda ou na conversa.
 
 ## Passo a passo
 
@@ -13,9 +13,9 @@ Regra fixa: **nada é agendado nem publicado sem a aprovação da Helo.**
 4. Rode `python3 scripts/make_short.py specs/<spec>.json` para cada um (cerca de 5 min cada). Confira a capa gerada.
 5. `git add`, `commit` e `push` em `main`. O link do vídeo para o Buffer é
    `https://raw.githubusercontent.com/viniciusbritt/vox_dei_videos/main/<saida>/<nome>.mp4`.
-6. No Buffer (canal YouTube "Vox Dei"), crie cada post como **rascunho** (`saveToDraft: true`), com vídeo, título, descrição e hashtags.
-7. Suba a capa na agenda (Artifact publish, `asset: true`) e grave `plano/AAAA-MM-DD` (7h) e `plano/AAAA-MM-DD-noite` (20h) com `etapa: "revisao"`, `capa`, `bufferPostId` e os demais campos.
-8. Mande para a Helo as capas, os títulos e o pedido de aprovação. Só depois do "aprovado" dela, agende no Buffer (7h e 20h, America/Sao_Paulo) e mude a `etapa` para `agendado`.
+6. No Buffer (canal YouTube "Vox Dei"), **agende** cada post (`mode: customScheduled`, `dueAt` 07:00 e 20:00 com `-03:00`), com vídeo, título, descrição e hashtags. Se algo falhar, não agende pela metade: avise a Helo.
+7. Suba a capa na agenda (Artifact publish, `asset: true`) e grave `plano/AAAA-MM-DD` (7h) e `plano/AAAA-MM-DD-noite` (20h) com `etapa: "agendado"`, `capa`, `bufferPostId` e os demais campos.
+8. Mande para a Helo um aviso curto com as capas e os títulos do que foi agendado.
 
 ## Formato do spec
 
