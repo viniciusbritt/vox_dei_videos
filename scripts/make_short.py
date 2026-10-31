@@ -111,6 +111,19 @@ def piano(path, seed):
         w_.writeframes((st * 32767).astype(np.int16).tobytes())
 
 
+def particles_layer(t, P):
+    """Partículas douradas subindo devagar, com brilho pulsando (por trás do texto)."""
+    px, py, vs, pr, ph = P
+    L = Image.new("L", (W, H), 0); d = ImageDraw.Draw(L)
+    for k in range(len(px)):
+        cy = (py[k] - vs[k] * t) % H; cx = px[k] + 14 * np.sin(t * 0.5 + ph[k])
+        a = int(170 + 85 * np.sin(t * 1.4 + ph[k]))
+        d.ellipse([cx - pr[k], cy - pr[k], cx + pr[k], cy + pr[k]], fill=max(0, min(255, a)))
+    core = np.asarray(L.filter(ImageFilter.GaussianBlur(1.2))).astype(np.float32)
+    halo = np.asarray(L.filter(ImageFilter.GaussianBlur(9))).astype(np.float32) * 1.6
+    return np.clip(np.maximum(core, halo), 0, 255)[..., None] / 255
+
+
 def main(spec_path):
     spec = json.load(open(spec_path, encoding="utf-8"))
     outdir = os.path.join(ROOT, spec["saida"]); os.makedirs(outdir, exist_ok=True)
@@ -123,11 +136,19 @@ def main(spec_path):
                            "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20",
                            "-preset", "medium", vid], stdin=subprocess.PIPE)
     cover = None
-    for i in range(FPS * DUR):
+    P = None
+    if spec.get("particulas"):
+        rng = np.random.default_rng(seed + 1); n = 60
+        P = (rng.uniform(0, W, n), rng.uniform(0, H, n), rng.uniform(18, 50, n), rng.uniform(3, 7, n), rng.uniform(0, 6.28, n))
+    frames = [int(os.environ["SO_QUADRO"])] if os.environ.get("SO_QUADRO") else range(FPS * DUR)
+    for i in frames:
         t = i / FPS; z = 1.0 + 0.04 * t / DUR
         cw, ch = min(int(W * 1.05 / z), BW), min(int(H * 1.05 / z), BH)
         x0, y0 = (BW - cw) // 2, (BH - ch) // 2
         fr = np.asarray(Image.fromarray(BG[y0:y0 + ch, x0:x0 + cw]).resize((W, H), Image.BILINEAR)).astype(np.float32)
+        if P is not None:
+            pl = particles_layer(t, P)
+            fr = fr * (1 - pl) + np.array([200, 132, 38]) * pl
         for st, Lr in layers:
             if t < st:
                 continue
@@ -136,8 +157,11 @@ def main(spec_path):
         fr *= min(1, t / 0.3 + 0.0001)
         frame = np.clip(fr, 0, 255).astype(np.uint8)
         ff.stdin.write(frame.tobytes())
-        if i == FPS * 8:
+        if i == FPS * 8 or os.environ.get("SO_QUADRO"):
             cover = frame
+    if os.environ.get("SO_QUADRO"):
+        ff.stdin.close(); ff.wait()
+        Image.fromarray(cover).save(os.path.join(tmp, "quadro.png")); print(os.path.join(tmp, "quadro.png")); return
     ff.stdin.close(); ff.wait()
     piano(wav, seed)
     mp4 = os.path.join(outdir, name + ".mp4")

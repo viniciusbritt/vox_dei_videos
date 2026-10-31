@@ -10,6 +10,7 @@ A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada de
 3. Escreva 2 specs em `specs/`:
    - `AAAA-MM-DD-manha.json`: tema do dia em `config/semana` (dom Salmo 23, seg família, ter cura, qua Nossa Senhora, qui ansiedade, sex perdão, sáb proteção). Tom de começo de dia.
    - `AAAA-MM-DD-noite.json`: oração da noite (paz, sono, entrega, perdão, medo, ansiedade). Tom de fim de dia.
+   - **Teste A/B de partículas (pedido da Helo, 31/10):** em cada dia, só UM dos dois Shorts leva `"particulas": true` (partículas douradas subindo). Dia do mês par: o da manhã leva; dia ímpar: o da noite leva. Assim os dois horários testam com e sem. Grave `"particulas": true/false` no doc da agenda.
 4. Rode `python3 scripts/make_short.py specs/<spec>.json` para cada um (cerca de 5 min cada). Confira a capa gerada.
 5. `git add`, `commit` e `push` em `main`. O link do vídeo para o Buffer é
    `https://raw.githubusercontent.com/viniciusbritt/vox_dei_videos/main/<saida>/<nome>.mp4`.
@@ -28,7 +29,8 @@ A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada de
   "gancho_depois": "Aqui está.",
   "oracao": [["linha 1", "linha 2"], ["linha 3", "linha 4"]],
   "referencia": "Salmo 127,1",
-  "cta": "Escreva AMÉM se você recebe esta oração"
+  "cta": "Escreva AMÉM se você recebe esta oração",
+  "particulas": true
 }
 ```
 
