@@ -1,21 +1,23 @@
 # Agente diário da Vox Dei
 
-Roda todo dia às 5h03 (Brasília). Produz e **agenda** os 2 Shorts do **dia seguinte** (7h e 20h).
+Roda todo dia às 5h03 (Brasília). Produz e **agenda** os 3 Shorts do **dia seguinte** (7h, 12h e 20h). Desde 02/11/2026 (decisão da Helo).
 A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada depois e pode pedir mudanças pelo campo `recadoHelo` da agenda ou na conversa.
 
 ## Passo a passo
 
 1. `git pull` neste repositório. Leia os `specs/` dos últimos 14 dias para não repetir versículo, gancho, palavra em destaque nem frases.
 2. Leia a agenda (`config/semana` e `plano` em https://claude.ai/artifact/6pfcJwkDWtaFv9KspiVxVw) e veja se a Helo deixou `recadoHelo` ou mudou algum tema.
-3. Escreva 2 specs em `specs/`:
-   - `AAAA-MM-DD-manha.json`: tema do dia em `config/semana` (dom Salmo 23, seg família, ter cura, qua Nossa Senhora, qui ansiedade, sex perdão, sáb proteção). Tom de começo de dia.
-   - `AAAA-MM-DD-noite.json`: oração da noite (paz, sono, entrega, perdão, medo, ansiedade). Tom de fim de dia.
-   - **Teste A/B de partículas (pedido da Helo, 31/10):** em cada dia, só UM dos dois Shorts leva `"particulas": true` (partículas douradas subindo). Dia do mês par: o da manhã leva; dia ímpar: o da noite leva. Assim os dois horários testam com e sem. Grave `"particulas": true/false` no doc da agenda.
+3. Escreva 3 specs em `specs/`, cada um com o seu estilo fixo (Helo, 02/11/2026; estudo de design https://claude.ai/artifact/DhcC7adX4RarDuZq7SRhED):
+   - `AAAA-MM-DD-manha.json`, 7h, `"estilo": "gigante"` (variação 8: preto, letras condensadas enormes, destaque amarelo), `"particulas": false`. Tema do dia em `config/semana.dias` (dom Salmo 23, seg família, ter cura, qua Nossa Senhora, qui ansiedade, sex perdão, sáb proteção). Tom de começo de dia.
+   - `AAAA-MM-DD-meiodia.json`, 12h, `"estilo": "marca-texto"` (variação 4: branco, letras grossas, destaque com marca-texto amarelo), `"particulas": false`. Tema em `config/semana.meiodia` (dom gratidão pela semana, seg força no trabalho, ter gratidão, qua Ângelus, qui pão de cada dia, sex Sagrado Coração, sáb Anjo da Guarda). Tom de pausa no meio do dia.
+   - `AAAA-MM-DD-noite.json`, 20h, `"estilo": "manuscrito"` (variação 3: pergaminho, moldura dourada, letra capitular), `"particulas": "leve"`. Oração da noite (paz, sono, entrega, perdão, medo, ansiedade). Tom de fim de dia.
+   - O teste A/B de partículas acabou (Helo gostou): só a noite leva partículas, sempre leves.
+   - No estilo manuscrito a oração é reescrita automaticamente em parágrafo; comece o 1º parágrafo com uma letra (não aspas) para sair a capitular.
 4. Rode `python3 scripts/make_short.py specs/<spec>.json` para cada um (cerca de 5 min cada). Confira a capa gerada.
 5. `git add`, `commit` e `push` em `main`. O link do vídeo para o Buffer é
    `https://raw.githubusercontent.com/viniciusbritt/vox_dei_videos/main/<saida>/<nome>.mp4`.
-6. No Buffer (canal YouTube "Vox Dei"), **agende** cada post (`mode: customScheduled`, `dueAt` 07:00 e 20:00 com `-03:00`), com vídeo, título, descrição e hashtags. Se algo falhar, não agende pela metade: avise a Helo.
-7. Suba a capa na agenda (Artifact publish, `asset: true`) e grave `plano/AAAA-MM-DD` (7h) e `plano/AAAA-MM-DD-noite` (20h) com `etapa: "agendado"`, `capa`, `bufferPostId` e os demais campos.
+6. No Buffer (canal YouTube "Vox Dei"), **agende** cada post (`mode: customScheduled`, `dueAt` 07:00, 12:00 e 20:00 com `-03:00`), com vídeo, título, descrição e hashtags. Se algo falhar, não agende pela metade: avise a Helo.
+7. Suba a capa na agenda (Artifact publish, `asset: true`) e grave `plano/AAAA-MM-DD` (7h), `plano/AAAA-MM-DD-meiodia` (12h) e `plano/AAAA-MM-DD-noite` (20h) com `etapa: "agendado"`, `estilo`, `capa`, `bufferPostId` e os demais campos.
 8. Mande para a Helo um aviso curto com as capas e os títulos do que foi agendado.
 
 ## Formato do spec
@@ -30,12 +32,14 @@ A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada de
   "oracao": [["linha 1", "linha 2"], ["linha 3", "linha 4"]],
   "referencia": "Salmo 127,1",
   "cta": "Escreva AMÉM se você recebe esta oração",
-  "particulas": true
+  "estilo": "gigante",
+  "particulas": false
 }
 ```
 
 - `destaque`: uma palavra curta em maiúsculas (DEUS, JESUS, MARIA, AMÉM, PAZ...). Varie entre os dias.
-- No máximo 11 linhas de oração, até cerca de 32 caracteres por linha. O script para com erro se uma linha ficar larga demais.
+- No máximo 11 linhas de oração, até cerca de 32 caracteres por linha. O script reduz a fonte para caber e para com erro se o texto não couber acima da área do título.
+- Plano grátis do Buffer segura 10 agendados: com 3 por dia, não agende mais que o dia seguinte.
 - Público católico: pode usar Ave-Maria, Nossa Senhora, santos e o Anjo da Guarda. Cite os versículos corretamente (numeração da Bíblia católica, com vírgula: Salmo 4,9).
 
 ## Copy (o que mais deu alcance)
