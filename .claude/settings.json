@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 scripts/comentarios.py pendentes:*)",
+      "Bash(python3 scripts/comentarios.py responder:*)"
+    ]
+  }
+}
