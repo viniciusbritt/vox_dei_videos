@@ -1,10 +1,14 @@
 """Gera um Short de oração em pergaminho (1080x1920, 16 s, fade-in, piano livre).
 
+Estilos ("estilo" no spec): pergaminho (padrão antigo), gigante (7h), marca-texto (12h), manuscrito (20h).
+"particulas": true | "leve" | false.
+
 Uso: python3 scripts/make_short.py specs/AAAA-MM-DD-manha.json
 Saídas (pasta 'saida' do spec): <nome>.mp4 e <nome>-capa.jpg (540x960).
 """
 import json, os, subprocess, sys, tempfile, wave, zlib
 import numpy as np
+import estilos
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -128,8 +132,16 @@ def main(spec_path):
     spec = json.load(open(spec_path, encoding="utf-8"))
     outdir = os.path.join(ROOT, spec["saida"]); os.makedirs(outdir, exist_ok=True)
     name = spec["nome"]; seed = zlib.crc32(name.encode())
-    BG = background(seed); BH, BW = BG.shape[:2]
-    layers = layers_from_spec(spec)
+    estilo = spec.get("estilo", "pergaminho")
+    if estilo == "gigante":
+        BG, layers = estilos.gigante(spec, seed)
+    elif estilo == "marca-texto":
+        BG, layers = estilos.marca_texto(spec, seed)
+    elif estilo == "manuscrito":
+        BG, layers = estilos.manuscrito(spec, seed, background)
+    else:
+        BG = background(seed); layers = layers_from_spec(spec)
+    BH, BW = BG.shape[:2]
     tmp = tempfile.mkdtemp()
     vid, wav = os.path.join(tmp, "v.mp4"), os.path.join(tmp, "a.wav")
     ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
@@ -137,9 +149,12 @@ def main(spec_path):
                            "-preset", "medium", vid], stdin=subprocess.PIPE)
     cover = None
     P = None
+    leve = spec.get("particulas") == "leve"
     if spec.get("particulas"):
-        rng = np.random.default_rng(seed + 1); n = 60
-        P = (rng.uniform(0, W, n), rng.uniform(0, H, n), rng.uniform(18, 50, n), rng.uniform(3, 7, n), rng.uniform(0, 6.28, n))
+        rng = np.random.default_rng(seed + 1); n = 38 if leve else 60
+        P = (rng.uniform(0, W, n), rng.uniform(0, H, n), rng.uniform(14, 38, n),
+             rng.uniform(2, 4.5, n) if leve else rng.uniform(3, 7, n), rng.uniform(0, 6.28, n))
+    P_ALPHA = 0.55 if leve else 1.0
     frames = [int(os.environ["SO_QUADRO"])] if os.environ.get("SO_QUADRO") else range(FPS * DUR)
     for i in frames:
         t = i / FPS; z = 1.0 + 0.04 * t / DUR
@@ -147,7 +162,7 @@ def main(spec_path):
         x0, y0 = (BW - cw) // 2, (BH - ch) // 2
         fr = np.asarray(Image.fromarray(BG[y0:y0 + ch, x0:x0 + cw]).resize((W, H), Image.BILINEAR)).astype(np.float32)
         if P is not None:
-            pl = particles_layer(t, P)
+            pl = particles_layer(t, P) * P_ALPHA
             fr = fr * (1 - pl) + np.array([200, 132, 38]) * pl
         for st, Lr in layers:
             if t < st:
