@@ -1,23 +1,87 @@
 [
-  {"titulo": "Oração da Manhã 🙏 Comece o dia com Deus",
-   "descricao": "Orações curtas para começar o dia nas mãos de Deus: proteção, trabalho e família. Todo dia às 7h uma oração nova. Escreva AMÉM nos comentários.",
-   "videos": ["LMszihnxo7I", "OfyKMGEc9hQ"]},
-  {"titulo": "Oração da Noite 🌙 Antes de Dormir",
-   "descricao": "Orações para entregar o dia a Jesus e dormir em paz. Todo dia às 20h uma oração nova. Escreva AMÉM nos comentários.",
-   "videos": ["LuDxkSY0epQ", "XSuLlX3HV5U"]},
-  {"titulo": "Quando Você Está Sem Forças | Salmos 34 e 46",
-   "descricao": "Para o coração partido e cansado: Deus está perto de você. Salmo 34,18 e Salmo 46.",
-   "videos": ["XRrhXJLhmd0", "KpcfTrTsnFo", "1rRyDvCky7k", "FzjC6oyc8qY", "fJwmz7usIsQ", "YfFcSwxLfKY", "6aFDvsQ-b3g", "O0NBD5gYW4c", "XLw8zBED9VI", "l_JRKTWgQZc"]},
-  {"titulo": "Não Temas, Deus Está Contigo | Isaías 41,10",
-   "descricao": "Para quem quer desistir ou acha que Deus esqueceu: Ele não solta a sua mão.",
-   "videos": ["ZN-gpaNyt8Y", "rlmP4xH1xG8", "9Iu7bGVbbBU", "ABX0ofqz7JM", "-ua1GLUX5io", "RraROOGVXMk"]},
-  {"titulo": "Fé na Dificuldade | Habacuque",
-   "descricao": "Mesmo quando a figueira não floresce, ainda confiamos no Senhor. Reflexões em Habacuque 2 e 3.",
-   "videos": ["joxmsjqH_QI", "PH6IwmdF78o", "B8BvysolMVI", "UafoydIY7Y8", "1Xx3UaKnOUc"]},
-  {"titulo": "Volte para Deus | Arrependimento e Perdão",
-   "descricao": "Para quem errou de novo e tem vergonha de voltar: o Pai espera você de braços abertos.",
-   "videos": ["EVamuIEAnL0", "fBiswMTrQ0c", "zrHTaRZCLow", "zZXBvNfhskA", "jEnv6h57Bko", "-6XvxznhXvU"]},
-  {"titulo": "Palavra de Deus para Ouvir | Vídeos Longos",
-   "descricao": "Feche os olhos e escute a Palavra. Reflexões mais longas nos Salmos, em Isaías e mais.",
-   "videos": ["T1Q7NFRz2Ug", "3NLBgKNJcaY", "RraROOGVXMk", "l_JRKTWgQZc", "-6XvxznhXvU", "6aFDvsQ-b3g", "z4XelYfEqC0"]}
+ {
+  "titulo": "Oração da Manhã 🙏 Comece o dia com Deus",
+  "descricao": "Orações curtas para começar o dia nas mãos de Deus: proteção, trabalho e família. Todo dia às 7h uma oração nova. Escreva AMÉM nos comentários.",
+  "videos": [
+   "LMszihnxo7I",
+   "OfyKMGEc9hQ"
+  ]
+ },
+ {
+  "titulo": "Oração da Noite 🌙 Antes de Dormir",
+  "descricao": "Orações para entregar o dia a Jesus e dormir em paz. Todo dia às 20h uma oração nova. Escreva AMÉM nos comentários.",
+  "videos": [
+   "LuDxkSY0epQ",
+   "XSuLlX3HV5U"
+  ]
+ },
+ {
+  "titulo": "Oração do Meio-Dia ☀️ Uma pausa com Deus",
+  "descricao": "Ao meio-dia, uma pausa para rezar: gratidão, trabalho, Ângelus, o pão de cada dia, Sagrado Coração e Anjo da Guarda. Todo dia às 12h uma oração nova. Escreva AMÉM nos comentários.",
+  "videos": []
+ },
+ {
+  "titulo": "Quando Você Está Sem Forças | Salmos 34 e 46",
+  "descricao": "Para o coração partido e cansado: Deus está perto de você. Salmo 34,18 e Salmo 46.",
+  "videos": [
+   "XRrhXJLhmd0",
+   "KpcfTrTsnFo",
+   "1rRyDvCky7k",
+   "FzjC6oyc8qY",
+   "fJwmz7usIsQ",
+   "YfFcSwxLfKY",
+   "6aFDvsQ-b3g",
+   "O0NBD5gYW4c",
+   "XLw8zBED9VI",
+   "l_JRKTWgQZc"
+  ]
+ },
+ {
+  "titulo": "Não Temas, Deus Está Contigo | Isaías 41,10",
+  "descricao": "Para quem quer desistir ou acha que Deus esqueceu: Ele não solta a sua mão.",
+  "videos": [
+   "ZN-gpaNyt8Y",
+   "rlmP4xH1xG8",
+   "9Iu7bGVbbBU",
+   "ABX0ofqz7JM",
+   "-ua1GLUX5io",
+   "RraROOGVXMk"
+  ]
+ },
+ {
+  "titulo": "Fé na Dificuldade | Habacuque",
+  "descricao": "Mesmo quando a figueira não floresce, ainda confiamos no Senhor. Reflexões em Habacuque 2 e 3.",
+  "videos": [
+   "joxmsjqH_QI",
+   "PH6IwmdF78o",
+   "B8BvysolMVI",
+   "UafoydIY7Y8",
+   "1Xx3UaKnOUc"
+  ]
+ },
+ {
+  "titulo": "Volte para Deus | Arrependimento e Perdão",
+  "descricao": "Para quem errou de novo e tem vergonha de voltar: o Pai espera você de braços abertos.",
+  "videos": [
+   "EVamuIEAnL0",
+   "fBiswMTrQ0c",
+   "zrHTaRZCLow",
+   "zZXBvNfhskA",
+   "jEnv6h57Bko",
+   "-6XvxznhXvU"
+  ]
+ },
+ {
+  "titulo": "Palavra de Deus para Ouvir | Vídeos Longos",
+  "descricao": "Feche os olhos e escute a Palavra. Reflexões mais longas nos Salmos, em Isaías e mais.",
+  "videos": [
+   "T1Q7NFRz2Ug",
+   "3NLBgKNJcaY",
+   "RraROOGVXMk",
+   "l_JRKTWgQZc",
+   "-6XvxznhXvU",
+   "6aFDvsQ-b3g",
+   "z4XelYfEqC0"
+  ]
+ }
 ]
