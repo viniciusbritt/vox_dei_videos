@@ -20,6 +20,14 @@ A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada de
 7. Suba a capa na agenda (Artifact publish, `asset: true`) e grave `plano/AAAA-MM-DD` (7h), `plano/AAAA-MM-DD-meiodia` (12h) e `plano/AAAA-MM-DD-noite` (20h) com `etapa: "agendado"`, `estilo`, `capa`, `bufferPostId` e os demais campos.
 8. Mande para a Helo um aviso curto com as capas e os títulos do que foi agendado.
 
+## Regra de sexta-feira (pedido da Helo, 03/11/2026)
+
+A Helo agenda os TikToks do fim de semana na sexta às 19h50. Por isso:
+- **Sexta (rodada das 5h03):** produza os Shorts de **sábado, domingo e segunda** (3 horários cada, 9 vídeos), todos com commit e push no `main`. No Buffer, agende só **sábado e domingo** (com os 3 de sexta ainda na fila dá 9, dentro do limite de 10). Grave os docs de segunda na agenda com `etapa: "video"` e a nota "produzido na sexta; agendar no Buffer no sábado".
+- **Sábado:** não produza nada novo. Só agende no Buffer os 3 de segunda (já estão no repositório) e atualize os docs de segunda para `etapa: "agendado"` com `bufferPostId`.
+- **Domingo:** volta ao normal (produz terça).
+- Antes de agendar, conte os posts agendados no Buffer; nunca passe de 10.
+
 ## Formato do spec
 
 ```json
