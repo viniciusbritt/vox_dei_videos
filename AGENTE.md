@@ -17,7 +17,7 @@ A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada de
 5. `git add`, `commit` e `push` em `main`. O link do vídeo para o Buffer é
    `https://raw.githubusercontent.com/viniciusbritt/vox_dei_videos/main/<saida>/<nome>.mp4`.
 6. No Buffer (canal YouTube "Vox Dei"), **agende** cada post (`mode: customScheduled`, `dueAt` 07:00, 12:00 e 20:00 com `-03:00`), com vídeo, título, descrição e hashtags. Se algo falhar, não agende pela metade: avise a Helo.
-7. Suba a capa na agenda (Artifact publish, `asset: true`) e grave `plano/AAAA-MM-DD` (7h), `plano/AAAA-MM-DD-meiodia` (12h) e `plano/AAAA-MM-DD-noite` (20h) com `etapa: "agendado"`, `estilo`, `capa`, `bufferPostId` e os demais campos.
+7. Suba na agenda, numa única chamada (Artifact publish, `url` da agenda, `asset: true`, `file_paths`), as capas **e os mp4** dos Shorts do dia. Grave `plano/AAAA-MM-DD` (7h), `plano/AAAA-MM-DD-meiodia` (12h) e `plano/AAAA-MM-DD-noite` (20h) num único batch com `etapa: "agendado"`, `estilo`, `capa` ("/_blob/<id>" da capa), `video` ("/_blob/<id>" do mp4, a página mostra o player), `bufferPostId` e os demais campos. A página mostra sozinha as plataformas (YouTube pelo bufferPostId, TikTok pelos campos tiktok/tiktokHora); não republique a página.
 8. Mande para a Helo um aviso curto com as capas e os títulos do que foi agendado.
 
 ## Regra de sexta-feira (pedido da Helo, 03/11/2026)
