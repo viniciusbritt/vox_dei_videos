@@ -50,6 +50,19 @@ A Helo agenda os TikToks do fim de semana na sexta às 19h50. Por isso:
 - Plano grátis do Buffer segura 10 agendados: com 3 por dia, não agende mais que o dia seguinte.
 - Público católico: pode usar Ave-Maria, Nossa Senhora, santos e o Anjo da Guarda. Cite os versículos corretamente (numeração da Bíblia católica, com vírgula: Salmo 4,9).
 
+### Estilo "biblia" (Bíblia grifada, em teste desde 04/11)
+
+```json
+{"nome": "...", "saida": "shorts/2026-11", "estilo": "biblia", "duracao": 20,
+ "titulo_leitura": "Isaías 41,10",
+ "versiculo_texto": "“==trecho grifado== resto do versículo.”",
+ "reflexao": ["Parágrafo com ==grifo== e __palavra sublinhada__.", "...", "Se você crê, escreva ==“Amém”== ..."],
+ "cores": ["amarelo", "verde", "rosa", "amarelo"], "particulas": false}
+```
+- `==texto==` = marca-texto (cor do parágrafo, na ordem de `cores`: amarelo, verde, rosa, azul). `__texto__` = negrito sublinhado.
+- Versículo + 2 a 3 parágrafos curtos de reflexão própria (não copie textos de outros canais). Total de até ~90 palavras.
+- Exemplo: specs/teste/biblia-isaias41.json.
+
 ## Copy (o que mais deu alcance)
 
 - **Título:** o gancho do vídeo, com a palavra em destaque em maiúsculas + emoji + versículo + `#shorts`. Até 100 caracteres. Exemplo: `Você pediu um sinal de DEUS? Reze esta oração 🙏 Salmo 51,12 #shorts`.

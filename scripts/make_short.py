@@ -155,11 +155,15 @@ def main(spec_path):
     spec = json.load(open(spec_path, encoding="utf-8"))
     outdir = os.path.join(ROOT, spec["saida"]); os.makedirs(outdir, exist_ok=True)
     name = spec["nome"]; seed = zlib.crc32(name.encode())
+    global DUR
+    DUR = int(spec.get("duracao", DUR))
     estilo = spec.get("estilo", "pergaminho")
     if estilo == "gigante":
         BG, layers = estilos.gigante(spec, seed)
     elif estilo == "marca-texto":
         BG, layers = estilos.marca_texto(spec, seed)
+    elif estilo == "biblia":
+        BG, layers = estilos.biblia(spec, seed)
     elif estilo == "manuscrito":
         BG, layers = estilos.manuscrito(spec, seed, background)
     else:
@@ -187,11 +191,20 @@ def main(spec_path):
         if P is not None:
             pl = particles_layer(t, P) * P_ALPHA
             fr = fr * (1 - pl) + np.array([200, 132, 38]) * pl
-        for st, Lr in layers:
+        for item in layers:
+            st, Lr = item[0], item[1]
             if t < st:
                 continue
-            a = min(1, (t - st) / 0.8); a = a * a * (3 - 2 * a)
-            al = Lr[..., 3:4] / 255 * a; fr = fr * (1 - al) + Lr[..., :3] * al
+            if len(item) > 2:          # marca-texto passando da esquerda para a direita
+                p = min(1, max(0, (t - st - 0.5) / 0.9))
+                if p <= 0:
+                    continue
+                m = (np.arange(W) < p * W).astype(np.float32)[None, :, None]
+                al = Lr[..., 3:4] / 255 * m
+            else:
+                a = min(1, (t - st) / 0.8); a = a * a * (3 - 2 * a)
+                al = Lr[..., 3:4] / 255 * a
+            fr = fr * (1 - al) + Lr[..., :3] * al
         fr *= min(1, t / 0.3 + 0.0001)
         frame = np.clip(fr, 0, 255).astype(np.uint8)
         ff.stdin.write(frame.tobytes())

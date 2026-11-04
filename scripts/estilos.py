@@ -109,7 +109,7 @@ def _try_sizes(build, sizes):
         if bottom <= LIMITE:
             dy = int(min((LIMITE - bottom) // 2, 180))   # centraliza quando sobra espaço
             if dy > 0:
-                out = [(t, np.concatenate([np.zeros((dy, W, 4), np.float32), a[:-dy]])) for t, a in out]
+                out = [(it[0], np.concatenate([np.zeros((dy, W, 4), np.float32), it[1][:-dy]])) + tuple(it[2:]) for it in out]
             return out
     raise SystemExit(f"Texto longo demais para o estilo (termina em {bottom}px); encurte a oração.")
 
@@ -241,3 +241,152 @@ def manuscrito(spec, seed, background):
         out.append((T_CTA, arr(L)))
         return out, y
     return background(seed), _try_sizes(build, [50, 48, 46, 44, 42, 40])
+
+
+# ---------------- Bíblia grifada (teste pedido pela Helo em 04/11/2026) ----------------
+# Página de Bíblia, referência grande no topo, versículo e reflexão com marca-texto (==texto==)
+# e palavras sublinhadas em negrito (__texto__). Cada parágrafo usa uma cor de marca-texto.
+HL = {"amarelo": (255, 224, 70), "verde": (160, 232, 150), "rosa": (255, 176, 206), "azul": (150, 215, 255)}
+
+
+def _rich(text):
+    """'a ==b c== __d__' -> [(palavra, grifo, sublinhado)]"""
+    out, hl, ul, cur = [], False, False, ""
+    i = 0
+    while i < len(text):
+        two = text[i:i + 2]
+        if two in ("==", "__"):
+            if cur:
+                out.append((cur, hl, ul)); cur = ""
+            if two == "==":
+                hl = not hl
+            else:
+                ul = not ul
+            i += 2; continue
+        c = text[i]
+        if c == " ":
+            if cur:
+                out.append((cur, hl, ul)); cur = ""
+            out.append((" ", hl, ul))
+        else:
+            cur += c
+        i += 1
+    if cur:
+        out.append((cur, hl, ul))
+    # junta pedaços colados (ex.: 'palavra' + ',') numa unidade sem espaço
+    words, buf = [], []
+    for tok in out:
+        if tok[0] == " ":
+            if buf:
+                words.append(buf); buf = []
+        else:
+            buf.append(tok)
+    if buf:
+        words.append(buf)
+    return words
+
+
+def _rich_lines(words, fonts, maxw):
+    sp = tl(" ", fonts[0])
+    wlen = lambda w: sum(tl(s, fonts[1] if u else fonts[0]) for s, h, u in w)
+    lines, cur, cw = [], [], 0
+    for w in words:
+        L = wlen(w)
+        if cur and cw + sp + L > maxw:
+            lines.append(cur); cur, cw = [w], L
+        else:
+            cw = cw + (sp if cur else 0) + L; cur.append(w)
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def _draw_rich(dt, dh, lines, fonts, x0, y, lh, ink, ul_col, hl_col, rng):
+    sp = tl(" ", fonts[0]); size = fonts[0].size
+    for ln in lines:
+        x = x0; run = None
+        segs = []
+        for wi, w in enumerate(ln):
+            if wi:
+                segs.append((" ", w[0][1] and ln[wi - 1][-1][1], False, x, sp)); x += sp
+            for s, h, u in w:
+                f = fonts[1] if u else fonts[0]; L = tl(s, f)
+                segs.append((s, h, u, x, L)); x += L
+        for s, h, u, sx, L in segs:            # marca-texto (camada de baixo)
+            if h:
+                run = [sx, sx + L] if run is None else [run[0], sx + L]
+            elif run is not None:
+                _hl(dh, run, y, size, hl_col, rng); run = None
+        if run is not None:
+            _hl(dh, run, y, size, hl_col, rng)
+        for s, h, u, sx, L in segs:            # texto
+            if s == " ":
+                continue
+            f = fonts[1] if u else fonts[0]
+            dt.text((sx, y), s, font=f, fill=ink)
+            if u:
+                dt.line([(sx, y + size * 1.13), (sx + L, y + size * 1.13)], fill=ul_col, width=max(3, size // 14))
+        y += lh
+    return y
+
+
+def _hl(d, run, y, size, col, rng):
+    x0, x1 = run[0] - 6, run[1] + 6
+    top, bot = y + size * 0.12 + rng.uniform(-3, 3), y + size * 1.18 + rng.uniform(-3, 3)
+    d.polygon([(x0, top + rng.uniform(-4, 4)), (x1, top + rng.uniform(-4, 4)),
+               (x1 + rng.uniform(-4, 4), bot), (x0 + rng.uniform(-4, 4), bot)], fill=col + (175,))
+
+
+def _pagina(seed):
+    rng = np.random.default_rng(seed)
+    BW, BH = int(W * 1.05), int(H * 1.05)
+    base = np.array([247, 240, 224], np.float32)
+    n = rng.normal(0, 1, (BH // 6, BW // 6)).astype(np.float32)
+    n = np.asarray(Image.fromarray(((n * 24) + 128).clip(0, 255).astype(np.uint8)).resize((BW, BH), Image.BICUBIC)).astype(np.float32) - 128
+    bg = base[None, None, :] + n[..., None] * 0.18 + rng.normal(0, 3, (BH, BW))[..., None]
+    x = np.linspace(0, 1, BW)[None, :]
+    gut = np.clip(1 - np.exp(-x / 0.06) * 0.75, 0, 1)                    # sombra da lombada à esquerda
+    yy = np.linspace(-1, 1, BH)[:, None]
+    vig = np.clip(1 - 0.18 * (yy ** 4) - 0.10 * ((x - 0.5) * 2) ** 4, 0.6, 1)
+    edge = np.clip(1 - np.exp(-(1 - x) / 0.012) * 0.25, 0, 1)            # borda das folhas à direita
+    m = gut * edge * vig
+    bg = bg * m[..., None] + np.array([90, 62, 34]) * (1 - m)[..., None] * 0.45
+    for k in range(6):                                                    # folhas empilhadas
+        xx = BW - 6 - k * 5
+        bg[:, xx:xx + 1] *= 0.93
+    return np.clip(bg, 0, 255).astype(np.uint8)
+
+
+def biblia(spec, seed):
+    INK, UL, TITLE = (24, 20, 16, 255), (40, 96, 60, 255), (18, 16, 14, 255)
+    X0, MAXT = 110, W - 110 - 130
+    cores = spec.get("cores", ["amarelo", "verde", "rosa", "amarelo"])
+    pars = [spec["versiculo_texto"]] + spec["reflexao"]
+
+    def build(bs):
+        rng = np.random.default_rng(seed)
+        out = []
+        ft = fit("librebaskerville-700.ttf", 128, [spec["titulo_leitura"]], MAXT)
+        L, d = layer(); y = 150
+        if spec.get("chamada"):
+            fc = font("librebaskerville-400.ttf", 40)
+            y = center(d, [spec["chamada"]], fc, y, (90, 70, 50, 255), 1.3, (X0 + X0 + MAXT) / 2)
+        y = center(d, [spec["titulo_leitura"]], ft, y, TITLE, 1.25, (X0 + X0 + MAXT) / 2) + 10
+        cx = (X0 + X0 + MAXT) / 2
+        d.line([(cx - 120, y), (cx - 18, y)], fill=(150, 120, 70, 255), width=2)
+        d.line([(cx + 18, y), (cx + 120, y)], fill=(150, 120, 70, 255), width=2)
+        d.regular_polygon((cx, y, 9), 4, fill=(150, 120, 70, 255))
+        out.append((T_GANCHO, arr(L))); y += 44
+        for i, p in enumerate(pars):
+            verse = i == 0
+            fonts = (font("librebaskerville-700.ttf" if verse else "librebaskerville-400.ttf", bs + (2 if verse else 0)),
+                     font("lora-bold.ttf", bs + 4))
+            lines = _rich_lines(_rich(p), fonts, MAXT)
+            Lt, dt = layer(); Lh, dh = layer()
+            col = HL[cores[min(i, len(cores) - 1)]]
+            y2 = _draw_rich(dt, dh, lines, fonts, X0, y, int(fonts[0].size * 1.42), INK, UL, col, rng)
+            st = T_PAR[min(i, 2)] if i < 3 else T_REF
+            out.append((st, arr(Lh), "wipe")); out.append((st, arr(Lt)))
+            y = y2 + int(bs * 0.75)
+        return out, y
+    return _pagina(seed), _try_sizes(build, [44, 42, 40, 38, 36, 34, 32])
