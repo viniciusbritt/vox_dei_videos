@@ -1,0 +1,15 @@
+{
+ "saida": "shorts/teste",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "teste-foto-mateus11",
+ "modelo": 3,
+ "titulo_leitura": "Mateus 11,28",
+ "texto": [
+  "“==Vinde a mim, todos vós que estais cansados e sobrecarregados, e eu vos darei descanso.==”",
+  "Jesus não pede que você chegue forte. Ele pede que você venha. ==Do jeito que está, com o cansaço que tem.==",
+  "Entregue a Ele o peso deste dia e ==durma em paz==, porque quem cuida de você não dorme.",
+  "Se você aceita este descanso, ==escreva “Amém”==."
+ ]
+}

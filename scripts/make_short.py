@@ -162,8 +162,11 @@ def main(spec_path):
         BG, layers = estilos.gigante(spec, seed)
     elif estilo == "marca-texto":
         BG, layers = estilos.marca_texto(spec, seed)
-    elif estilo == "biblia-foto":
-        BG, layers = estilos.biblia_foto(spec, seed)
+    elif estilo == "biblia-foto":       # Helo 04/11: foto parada, sem fade nem animação, só partículas e música
+        import biblia_foto
+        BG, modelo = biblia_foto.render(spec, seed); layers = []
+        spec.setdefault("particulas", "leve")
+        print("modelo de página:", modelo)
     elif estilo == "biblia":
         BG, layers = estilos.biblia(spec, seed)
     elif estilo == "manuscrito":
@@ -210,7 +213,8 @@ def main(spec_path):
                 a = min(1, (t - st) / 0.8); a = a * a * (3 - 2 * a)
                 al = Lr[..., 3:4] / 255 * a
             fr = fr * (1 - al) + Lr[..., :3] * al
-        fr *= min(1, t / 0.3 + 0.0001)
+        if estilo != "biblia-foto":
+            fr *= min(1, t / 0.3 + 0.0001)
         frame = np.clip(fr, 0, 255).astype(np.uint8)
         ff.stdin.write(frame.tobytes())
         if i == FPS * 8 or os.environ.get("SO_QUADRO"):

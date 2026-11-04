@@ -1,0 +1,15 @@
+{
+ "saida": "shorts/teste",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "teste-foto-filipenses4",
+ "modelo": 4,
+ "titulo_leitura": "Filipenses 4,6-7",
+ "texto": [
+  "“==Não vos inquieteis com coisa alguma==, mas em tudo apresentai a Deus os vossos pedidos em oração.",
+  "E ==a paz de Deus, que excede todo entendimento, guardará os vossos corações== e as vossas mentes em Cristo Jesus.”",
+  "A ansiedade quer roubar o seu dia. ==Troque a preocupação por oração== e deixe Deus cuidar do resto.",
+  "Se você recebe esta paz, ==escreva “Amém”== agora."
+ ]
+}
