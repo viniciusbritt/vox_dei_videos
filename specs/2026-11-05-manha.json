@@ -1,14 +1,26 @@
 {
-  "nome": "2026-11-05-manha-isaias41-clara",
+  "nome": "2026-11-05-manha-ansiedade",
   "saida": "shorts/2026-11",
-  "estilo": "biblia",
-  "duracao": 20,
-  "titulo_leitura": "Isaías 41,10",
-  "versiculo_texto": "“==Não temas, porque eu estou contigo;== não te assustes, porque eu sou o teu Deus. ==Eu te fortaleço, eu te ajudo,== eu te sustento com a minha mão direita.”",
-  "reflexao": [
-    "Se hoje o __medo__ bateu na sua porta, lembre-se: ==você não está sozinho.== Deus conhece cada luta que você esconde e já preparou a sua __vitória__.",
-    "Entregue a Ele o que tira o seu sono. ==O que é de Deus ninguém tira,== e o que não é, Ele afasta no tempo certo.",
-    "Se você crê, escreva ==“Amém”== e mande para alguém que precisa ler isto hoje."
+  "estilo": "gigante",
+  "particulas": false,
+  "gancho_antes": "Acordou com o peito",
+  "destaque": "APERTADO?",
+  "gancho_depois": "Reze isto antes de tudo.",
+  "oracao": [
+    [
+      "Senhor, tu conheces",
+      "cada pensamento que me aflige.",
+      "Coloco em tuas mãos",
+      "este dia e tudo o que temo."
+    ],
+    [
+      "“Não vos inquieteis com nada;",
+      "apresentai a Deus",
+      "as vossas necessidades,",
+      "e a paz de Deus guardará",
+      "o vosso coração.” Amém."
+    ]
   ],
-  "particulas": false
+  "referencia": "Filipenses 4,6-7",
+  "cta": "Escreva AMÉM e receba a paz"
 }
