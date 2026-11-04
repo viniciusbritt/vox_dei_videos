@@ -30,6 +30,21 @@ def tl(s, f):
 
 
 def wrap(text, f, maxw):
+    """Quebra equilibrada: mesma quantidade de linhas, mas sem palavra sozinha na última."""
+    base = _wrap(text, f, maxw)
+    if len(base) < 2:
+        return base
+    best, w = base, maxw
+    while w > maxw * 0.5:
+        w -= 10
+        t = _wrap(text, f, w)
+        if len(t) != len(base):
+            break
+        best = t
+    return best
+
+
+def _wrap(text, f, maxw):
     words, lines, cur = text.split(), [], ""
     for w in words:
         t = (cur + " " + w).strip()

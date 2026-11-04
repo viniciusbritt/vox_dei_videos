@@ -1,0 +1,25 @@
+{
+  "nome": "2026-11-05-meiodia-pao",
+  "saida": "shorts/2026-11",
+  "estilo": "marca-texto",
+  "particulas": false,
+  "gancho_antes": "Hoje não vai faltar",
+  "destaque": "PÃO",
+  "gancho_depois": "na sua mesa. Creia.",
+  "oracao": [
+    [
+      "Pai, abençoa o alimento",
+      "de hoje e as mãos que o preparam.",
+      "Não deixes faltar o pão",
+      "na mesa da minha família",
+      "nem na mesa de quem tem fome."
+    ],
+    [
+      "“O pão nosso de cada dia",
+      "nos dai hoje.”",
+      "Em nome de Jesus, amém."
+    ]
+  ],
+  "referencia": "Mateus 6,11",
+  "cta": "Escreva AMÉM e receba a provisão"
+}
