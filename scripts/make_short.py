@@ -162,6 +162,8 @@ def main(spec_path):
         BG, layers = estilos.gigante(spec, seed)
     elif estilo == "marca-texto":
         BG, layers = estilos.marca_texto(spec, seed)
+    elif estilo == "biblia-foto":
+        BG, layers = estilos.biblia_foto(spec, seed)
     elif estilo == "biblia":
         BG, layers = estilos.biblia(spec, seed)
     elif estilo == "manuscrito":
@@ -187,7 +189,10 @@ def main(spec_path):
         t = i / FPS; z = 1.0 + 0.04 * t / DUR
         cw, ch = min(int(W * 1.05 / z), BW), min(int(H * 1.05 / z), BH)
         x0, y0 = (BW - cw) // 2, (BH - ch) // 2
-        fr = np.asarray(Image.fromarray(BG[y0:y0 + ch, x0:x0 + cw]).resize((W, H), Image.BILINEAR)).astype(np.float32)
+        if BG.shape[:2] == (H, W):      # fundo fixo (biblia-foto): sem zoom, para o texto não escorregar
+            fr = BG.astype(np.float32)
+        else:
+            fr = np.asarray(Image.fromarray(BG[y0:y0 + ch, x0:x0 + cw]).resize((W, H), Image.BILINEAR)).astype(np.float32)
         if P is not None:
             pl = particles_layer(t, P) * P_ALPHA
             fr = fr * (1 - pl) + np.array([200, 132, 38]) * pl
