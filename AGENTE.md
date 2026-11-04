@@ -13,6 +13,7 @@ A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada de
    - Calendário: 06/11 clara, 07/11 foto, 08/11 clara, 09/11 foto, e assim por diante (dia ímpar de novembro = foto; depois siga alternando, sem repetir o estilo do dia anterior). Confira o `estilo` do último doc em `plano` antes de decidir.
    - Temas: 7h tom de começo de dia (`config/semana.dias`), 12h pausa no meio do dia (`config/semana.meiodia`), 20h oração da noite (paz, sono, entrega, perdão, medo, ansiedade).
    - Os estilos antigos (gigante, marca-texto, manuscrito) foram aposentados depois de 05/11.
+   - **Exceção da rodada de 06/11 (sexta):** sábado 07/11 inteiro (7h, 12h, 20h) e o 7h de segunda 09/11 já estão prontos e agendados (versão foto aprovada pela Helo em 04/11). Nessa sexta produza só domingo 08/11 (3, clara) e o 12h e o 20h de segunda 09/11 (foto, modelos diferentes dos de sábado). Agende no Buffer só domingo; segunda 12h/20h ficam com `etapa: "video"` para o sábado agendar.
    - **Exceção da rodada de 05/11:** o 7h de 06/11 (Isaías 41,10) já está pronto e agendado. Produza só o 12h e o 20h de 06/11, no estilo clara.
 4. Rode `python3 scripts/make_short.py specs/<spec>.json` para cada um (cerca de 5 min cada). Confira a capa gerada.
 5. `git add`, `commit` e `push` em `main`. O link do vídeo para o Buffer é
