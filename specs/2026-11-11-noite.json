@@ -1,0 +1,14 @@
+{
+  "saida": "shorts/2026-11",
+  "estilo": "biblia-foto",
+  "duracao": 20,
+  "particulas": "leve",
+  "nome": "2026-11-11-noite-salmo91-foto",
+  "modelo": 2,
+  "titulo_leitura": "Salmo 91,1",
+  "texto": [
+    "^1 “==Quem habita ao abrigo do Altíssimo== descansa à sombra do Todo-poderoso.”",
+    "Durma em paz. ==Deus guarda você esta noite.==",
+    "Se você se entrega a Ele, ==escreva “Amém”==."
+  ]
+}
