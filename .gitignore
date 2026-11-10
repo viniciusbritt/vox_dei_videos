@@ -1,2 +1,5 @@
 __pycache__/
 shorts/teste/
+longos/_cache/
+longos/*/_tmp/
+longos/*/saida/
