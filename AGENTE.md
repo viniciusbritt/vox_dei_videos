@@ -44,3 +44,9 @@ O estilo `biblia` (página clara com grifo animado) continua disponível no gera
 - **Título:** gancho com 1 palavra em MAIÚSCULAS + emoji + versículo + `#shorts` (até 100 caracteres). Ex.: `Você pediu um sinal de DEUS? Reze esta oração 🙏 Salmo 51,12 #shorts`.
 - **Descrição:** 1ª linha com urgência, versículo completo, "Escreva AMÉM...", "Deixe o nome de quem...", "Inscreva-se na Vox Dei...", 5 a 6 hashtags (#oração #oraçãocatólica #salmoX #catolicos #shorts).
 - YouTube: `categoryId` "22", `madeForKids` false, `isAiGenerated` false, idioma pt-BR.
+
+## Formato novo: oração na íntegra (desde 12/11)
+
+- Pedido da Helo (11/11) para quebrar o molde Bíblia: oração inteira rezada por voz calma, texto que acende palavra por palavra, fundo escuro com luz de vela, gancho "Pare um instante" no 1º quadro e CTA "escreva Amém". Cerca de 40 s.
+- Gerador: `python3 scripts/make_oracao.py specs/<spec>.json` (exemplo: `specs/2026-11-12-manha-oracao.json`). Voz por `edge-tts` (`pip install edge-tts`), fica em `<saida>/voz/`. Render demora ~8 min.
+- 1º vídeo: São Miguel Arcanjo, 12/11 7h. Ver o resultado antes de repetir o formato.
