@@ -1,0 +1,475 @@
+{
+ "total": 3073.5931746031747,
+ "t_rain": 2413.5931746031747,
+ "eventos": [
+  {
+   "blk": 1,
+   "t0": 3.0,
+   "dur": 14.05,
+   "label": null,
+   "passe": 1
+  },
+  {
+   "blk": 2,
+   "t0": 20.05,
+   "dur": 12.16,
+   "label": null,
+   "passe": 1
+  },
+  {
+   "blk": 3,
+   "t0": 35.21,
+   "dur": 10.93,
+   "label": null,
+   "passe": 1
+  },
+  {
+   "blk": 4,
+   "t0": 49.15,
+   "dur": 24.96,
+   "label": "SALMO 4",
+   "passe": 1
+  },
+  {
+   "blk": 5,
+   "t0": 77.11,
+   "dur": 17.11,
+   "label": "SALMO 4",
+   "passe": 1
+  },
+  {
+   "blk": 6,
+   "t0": 97.22,
+   "dur": 7.8,
+   "label": "SALMO 4",
+   "passe": 1
+  },
+  {
+   "blk": 7,
+   "t0": 111.02,
+   "dur": 27.04,
+   "label": "SALMO 23",
+   "passe": 1
+  },
+  {
+   "blk": 8,
+   "t0": 141.06,
+   "dur": 6.34,
+   "label": "SALMO 23",
+   "passe": 1
+  },
+  {
+   "blk": 9,
+   "t0": 150.4,
+   "dur": 8.58,
+   "label": "SALMO 23",
+   "passe": 1
+  },
+  {
+   "blk": 10,
+   "t0": 164.99,
+   "dur": 25.28,
+   "label": "SALMO 91",
+   "passe": 1
+  },
+  {
+   "blk": 11,
+   "t0": 193.27,
+   "dur": 25.41,
+   "label": "SALMO 91",
+   "passe": 1
+  },
+  {
+   "blk": 12,
+   "t0": 221.68,
+   "dur": 11.58,
+   "label": "SALMO 91",
+   "passe": 1
+  },
+  {
+   "blk": 13,
+   "t0": 236.25,
+   "dur": 12.6,
+   "label": "SALMO 91",
+   "passe": 1
+  },
+  {
+   "blk": 14,
+   "t0": 254.86,
+   "dur": 25.65,
+   "label": "SALMO 121",
+   "passe": 1
+  },
+  {
+   "blk": 15,
+   "t0": 283.5,
+   "dur": 4.63,
+   "label": "SALMO 121",
+   "passe": 1
+  },
+  {
+   "blk": 16,
+   "t0": 291.13,
+   "dur": 8.3,
+   "label": "SALMO 121",
+   "passe": 1
+  },
+  {
+   "blk": 17,
+   "t0": 305.43,
+   "dur": 24.0,
+   "label": "SALMO 131",
+   "passe": 1
+  },
+  {
+   "blk": 18,
+   "t0": 332.43,
+   "dur": 7.02,
+   "label": "SALMO 131",
+   "passe": 1
+  },
+  {
+   "blk": 19,
+   "t0": 345.45,
+   "dur": 25.71,
+   "label": "SALMO 139",
+   "passe": 1
+  },
+  {
+   "blk": 20,
+   "t0": 374.15,
+   "dur": 24.48,
+   "label": "SALMO 139",
+   "passe": 1
+  },
+  {
+   "blk": 21,
+   "t0": 401.63,
+   "dur": 7.97,
+   "label": "SALMO 139",
+   "passe": 1
+  },
+  {
+   "blk": 22,
+   "t0": 415.6,
+   "dur": 28.48,
+   "label": "SALMO 27",
+   "passe": 1
+  },
+  {
+   "blk": 23,
+   "t0": 447.08,
+   "dur": 21.99,
+   "label": "SALMO 27",
+   "passe": 1
+  },
+  {
+   "blk": 24,
+   "t0": 475.07,
+   "dur": 11.04,
+   "label": null,
+   "passe": 1
+  },
+  {
+   "blk": 4,
+   "t0": 492.11,
+   "dur": 24.96,
+   "label": "SALMO 4",
+   "passe": 2
+  },
+  {
+   "blk": 5,
+   "t0": 529.07,
+   "dur": 17.11,
+   "label": "SALMO 4",
+   "passe": 2
+  },
+  {
+   "blk": 6,
+   "t0": 558.18,
+   "dur": 7.8,
+   "label": "SALMO 4",
+   "passe": 2
+  },
+  {
+   "blk": 7,
+   "t0": 607.98,
+   "dur": 27.04,
+   "label": "SALMO 23",
+   "passe": 2
+  },
+  {
+   "blk": 8,
+   "t0": 647.02,
+   "dur": 6.34,
+   "label": "SALMO 23",
+   "passe": 2
+  },
+  {
+   "blk": 9,
+   "t0": 665.36,
+   "dur": 8.58,
+   "label": "SALMO 23",
+   "passe": 2
+  },
+  {
+   "blk": 10,
+   "t0": 715.95,
+   "dur": 25.28,
+   "label": "SALMO 91",
+   "passe": 2
+  },
+  {
+   "blk": 11,
+   "t0": 753.23,
+   "dur": 25.41,
+   "label": "SALMO 91",
+   "passe": 2
+  },
+  {
+   "blk": 12,
+   "t0": 790.64,
+   "dur": 11.58,
+   "label": "SALMO 91",
+   "passe": 2
+  },
+  {
+   "blk": 13,
+   "t0": 814.22,
+   "dur": 12.6,
+   "label": "SALMO 91",
+   "passe": 2
+  },
+  {
+   "blk": 14,
+   "t0": 868.82,
+   "dur": 25.65,
+   "label": "SALMO 121",
+   "passe": 2
+  },
+  {
+   "blk": 15,
+   "t0": 906.46,
+   "dur": 4.63,
+   "label": "SALMO 121",
+   "passe": 2
+  },
+  {
+   "blk": 16,
+   "t0": 923.09,
+   "dur": 8.3,
+   "label": "SALMO 121",
+   "passe": 2
+  },
+  {
+   "blk": 17,
+   "t0": 973.39,
+   "dur": 24.0,
+   "label": "SALMO 131",
+   "passe": 2
+  },
+  {
+   "blk": 18,
+   "t0": 1009.39,
+   "dur": 7.02,
+   "label": "SALMO 131",
+   "passe": 2
+  },
+  {
+   "blk": 19,
+   "t0": 1058.41,
+   "dur": 25.71,
+   "label": "SALMO 139",
+   "passe": 2
+  },
+  {
+   "blk": 20,
+   "t0": 1096.11,
+   "dur": 24.48,
+   "label": "SALMO 139",
+   "passe": 2
+  },
+  {
+   "blk": 21,
+   "t0": 1132.59,
+   "dur": 7.97,
+   "label": "SALMO 139",
+   "passe": 2
+  },
+  {
+   "blk": 22,
+   "t0": 1182.56,
+   "dur": 28.48,
+   "label": "SALMO 27",
+   "passe": 2
+  },
+  {
+   "blk": 23,
+   "t0": 1223.04,
+   "dur": 21.99,
+   "label": "SALMO 27",
+   "passe": 2
+  },
+  {
+   "blk": 24,
+   "t0": 1287.03,
+   "dur": 11.04,
+   "label": null,
+   "passe": 2
+  },
+  {
+   "blk": 4,
+   "t0": 1313.07,
+   "dur": 24.96,
+   "label": "SALMO 4",
+   "passe": 3
+  },
+  {
+   "blk": 5,
+   "t0": 1356.03,
+   "dur": 17.11,
+   "label": "SALMO 4",
+   "passe": 3
+  },
+  {
+   "blk": 6,
+   "t0": 1391.14,
+   "dur": 7.8,
+   "label": "SALMO 4",
+   "passe": 3
+  },
+  {
+   "blk": 7,
+   "t0": 1466.94,
+   "dur": 27.04,
+   "label": "SALMO 23",
+   "passe": 3
+  },
+  {
+   "blk": 8,
+   "t0": 1511.98,
+   "dur": 6.34,
+   "label": "SALMO 23",
+   "passe": 3
+  },
+  {
+   "blk": 9,
+   "t0": 1536.33,
+   "dur": 8.58,
+   "label": "SALMO 23",
+   "passe": 3
+  },
+  {
+   "blk": 10,
+   "t0": 1612.91,
+   "dur": 25.28,
+   "label": "SALMO 91",
+   "passe": 3
+  },
+  {
+   "blk": 11,
+   "t0": 1656.19,
+   "dur": 25.41,
+   "label": "SALMO 91",
+   "passe": 3
+  },
+  {
+   "blk": 12,
+   "t0": 1699.6,
+   "dur": 11.58,
+   "label": "SALMO 91",
+   "passe": 3
+  },
+  {
+   "blk": 13,
+   "t0": 1729.18,
+   "dur": 12.6,
+   "label": "SALMO 91",
+   "passe": 3
+  },
+  {
+   "blk": 14,
+   "t0": 1809.78,
+   "dur": 25.65,
+   "label": "SALMO 121",
+   "passe": 3
+  },
+  {
+   "blk": 15,
+   "t0": 1853.43,
+   "dur": 4.63,
+   "label": "SALMO 121",
+   "passe": 3
+  },
+  {
+   "blk": 16,
+   "t0": 1876.05,
+   "dur": 8.3,
+   "label": "SALMO 121",
+   "passe": 3
+  },
+  {
+   "blk": 17,
+   "t0": 1952.35,
+   "dur": 24.0,
+   "label": "SALMO 131",
+   "passe": 3
+  },
+  {
+   "blk": 18,
+   "t0": 1994.35,
+   "dur": 7.02,
+   "label": "SALMO 131",
+   "passe": 3
+  },
+  {
+   "blk": 19,
+   "t0": 2069.37,
+   "dur": 25.71,
+   "label": "SALMO 139",
+   "passe": 3
+  },
+  {
+   "blk": 20,
+   "t0": 2113.07,
+   "dur": 24.48,
+   "label": "SALMO 139",
+   "passe": 3
+  },
+  {
+   "blk": 21,
+   "t0": 2155.55,
+   "dur": 7.97,
+   "label": "SALMO 139",
+   "passe": 3
+  },
+  {
+   "blk": 22,
+   "t0": 2231.52,
+   "dur": 28.48,
+   "label": "SALMO 27",
+   "passe": 3
+  },
+  {
+   "blk": 23,
+   "t0": 2278.0,
+   "dur": 21.99,
+   "label": "SALMO 27",
+   "passe": 3
+  },
+  {
+   "blk": 25,
+   "t0": 2367.99,
+   "dur": 27.36,
+   "label": null,
+   "passe": 4
+  },
+  {
+   "blk": 26,
+   "t0": 2398.35,
+   "dur": 15.24,
+   "label": null,
+   "passe": 4
+  }
+ ]
+}
