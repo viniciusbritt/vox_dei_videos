@@ -43,7 +43,7 @@ O estilo `biblia` (página clara com grifo animado) continua disponível no gera
 
 - **Título:** gancho com 1 palavra em MAIÚSCULAS + emoji + versículo + `#shorts` (até 100 caracteres). Ex.: `Você pediu um sinal de DEUS? Reze esta oração 🙏 Salmo 51,12 #shorts`.
 - **Descrição:** 1ª linha com urgência, versículo completo, "Escreva AMÉM...", "Deixe o nome de quem...", "Inscreva-se na Vox Dei...", 5 a 6 hashtags (#oração #oraçãocatólica #salmoX #catolicos #shorts).
-- YouTube: `categoryId` "22", `madeForKids` false, `isAiGenerated` false, idioma pt-BR.
+- YouTube: `categoryId` "22", `madeForKids` false, `isAiGenerated` false. O Buffer NÃO define idioma nem tags: a thread de SEO corrige para pt-BR e põe as tags no lote noturno (aviso de 15/11).
 
 ## Formato novo: oração na íntegra (desde 12/11)
 
