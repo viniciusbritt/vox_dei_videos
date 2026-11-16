@@ -18,6 +18,8 @@ Autorização: a Helo liberou agendar Shorts sem aprovação dela (31/10/2026). 
 
 ## Passo a passo
 
+0. Leia `/mnt/project-files/mentor/MODELO-DA-VEZ.md` (campeão, núcleo, testes e o que parar; atualizado pelo Mentor de canais dark). Não repita o gancho "PARE e reze comigo".
+
 1. `git pull` em `main`. Liste os `specs/` dos últimos 14 dias (só `referencia`/`titulo_leitura`) para não repetir versículo.
 2. Leia na agenda (https://claude.ai/artifact/6pfcJwkDWtaFv9KspiVxVw, ArtifactData) só os docs `plano/<amanhã>*` e `recadoHelo`, se houver.
 3. Escreva o spec em `specs/AAAA-MM-DD-manha.json` (12h = `-meiodia`, 20h = `-noite`) e rode `python3 scripts/make_short.py specs/<spec>.json`. Confira a capa.
