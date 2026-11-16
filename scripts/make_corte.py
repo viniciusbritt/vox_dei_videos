@@ -197,7 +197,7 @@ def main():
     frame_t = float(args[args.index("--frame") + 1]) if "--frame" in args else None
     nome = spec["nome"]; tmp = os.path.join(work, "cut_" + nome); os.makedirs(tmp, exist_ok=True)
     blocks = ms.load_blocks(pasta); words_all = json.load(open(os.path.join(pasta, "words.json"), encoding="utf-8"))
-    gap, tail, lead_in = spec.get("gap", 0.6), 1.6, 0.15
+    gap, tail, lead_in = spec.get("gap", 0.6), 2.6, 0.15
 
     # ---- narração + tempos de cada palavra
     aud, t, allw, times, lines_by_blk = [], lead_in, [], [], []
@@ -219,19 +219,22 @@ def main():
     pages = chunks(allw)
     cap_list = []   # (arquivo, duração)
     if layout != "B":
-        k = 0; cur_t = 0.0
-        for page in pages:
+        states = [(0.0, None)]; k = 0
+        for pi_, page in enumerate(pages):
             for hi in page:
-                st = times[hi][0]
-                nxt_i = hi + 1
-                en = times[nxt_i][0] if nxt_i < len(allw) and nxt_i in page else min(times[hi][1] + 0.18, T)
-                if st > cur_t + 0.01:
-                    cap_list.append((None, st - cur_t)); cur_t = st
                 p = os.path.join(tmp, f"cap_{k:04d}.png"); k += 1
                 caption_image(allw, page, hi, p, upper=False)
-                cap_list.append((p, max(0.05, en - cur_t))); cur_t = en
-        if T > cur_t:
-            cap_list.append((None, T - cur_t))
+                states.append((times[hi][0], p))
+            end = times[page[-1]][1] + 0.12
+            nxt_st = times[pages[pi_ + 1][0]][0] if pi_ + 1 < len(pages) else T
+            if end < nxt_st - 0.03:
+                states.append((end, None))
+        states.append((T, None))
+        # tempos estritamente crescentes (mín. 1 quadro) para não acumular atraso
+        fixed = [states[0]]
+        for st, pth in states[1:]:
+            fixed.append((max(st, fixed[-1][0] + 1.0 / FPS), pth))
+        cap_list = [(fixed[i][1], fixed[i + 1][0] - fixed[i][0]) for i in range(len(fixed) - 1)]
     blank = os.path.join(tmp, "blank.png"); Image.new("RGBA", (W, 520), (0, 0, 0, 0)).save(blank)
     if layout != "B":
         lst = os.path.join(tmp, "caps.txt")
@@ -319,7 +322,7 @@ def main():
     fg.append(f"[{n_in}:v]format=rgba[hk];[{last}][hk]overlay=0:150:format=auto[v2]"); last = "v2"; n_in += 1
     if phrase:
         inputs += ["-loop", "1", "-framerate", str(FPS), "-i", phrase]
-        fg.append(f"[{n_in}:v]format=rgba,fade=t=in:st=0.2:d=0.5:alpha=1,fade=t=out:st=8.5:d=0.6:alpha=1[ph];"
+        fg.append(f"[{n_in}:v]format=rgba,fade=t=out:st=8.5:d=0.6:alpha=1[ph];"
                   f"[{last}][ph]overlay=0:{spec.get('frase_y', 520)}:format=auto[v3]"); last = "v3"; n_in += 1
     inputs += ["-loop", "1", "-framerate", str(FPS), "-i", cta]
     fg.append(f"[{n_in}:v]format=rgba,fade=t=in:st={T-3:.2f}:d=0.4:alpha=1[ct];[{last}][ct]overlay=0:1500:format=auto:enable='gte(t,{T-3:.2f})'[v4]")
