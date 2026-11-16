@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-17-joao8",
+ "modelo": 1,
+ "titulo_leitura": "João 8,12",
+ "texto": [
+  "^12 “==Eu sou a luz do mundo.== Quem me segue não andará nas trevas.”",
+  "A escuridão não vence. ==Siga a luz.==",
+  "Se você O segue, ==escreva “Amém”==."
+ ],
+ "hl_cor": "azul",
+ "fonte_corpo": "librebaskerville-400.ttf",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "dir"
+ }
+}

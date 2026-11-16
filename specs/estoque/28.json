@@ -1,0 +1,19 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-28-numeros6",
+ "modelo": 4,
+ "titulo_leitura": "Números 6,24-26",
+ "texto": [
+  "^24 “==O Senhor te abençoe e te guarde;== ^25 o Senhor faça brilhar sobre ti a sua face.”",
+  "Esta bênção é para você hoje.",
+  "Receba, ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "dir"
+ }
+}

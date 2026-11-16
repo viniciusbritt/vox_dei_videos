@@ -1,0 +1,19 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-03-salmo46",
+ "modelo": 3,
+ "titulo_leitura": "Salmo 46,2",
+ "texto": [
+  "^2 “==Deus é o nosso refúgio e a nossa força==, socorro sempre presente na angústia.”",
+  "Corra para Ele agora. ==Ele já está aí.==",
+  "Se você crê, ==escreva “Amém”==."
+ ],
+ "hl_cor": "laranja",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "esq"
+ }
+}

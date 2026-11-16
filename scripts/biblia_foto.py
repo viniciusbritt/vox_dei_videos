@@ -271,7 +271,17 @@ def render(spec, seed):
     if isinstance(nm, int):
         nm = MODELOS[(nm - 1) % len(MODELOS)]
     nm = nm or MODELOS[seed % len(MODELOS)]
-    c = CFG[nm]
+    c = dict(CFG[nm])
+    # variações do estoque (16/11): cor do marca-texto, tom do papel, fonte do corpo
+    HLC = {"amarelo": (255, 232, 64), "verde": (170, 240, 120), "rosa": (255, 170, 200), "laranja": (255, 196, 110), "azul": (150, 210, 255)}
+    if spec.get("hl_cor"):
+        c["hl"] = HLC.get(spec["hl_cor"], c["hl"])
+    if spec.get("papel_tom"):
+        c["paper"] = tuple(int(np.clip(a + b, 0, 255)) for a, b in zip(c["paper"], spec["papel_tom"]))
+    if spec.get("fonte_corpo"):
+        c["body"] = spec["fonte_corpo"]
+    if spec.get("lh"):
+        c["lh"] = spec["lh"]
     PH, PW = H * SS, W * SS
     P = paper((PH, PW), c["paper"], rng, c["fiber"], c["stains"])
     pg = Image.new("L", (PW, PH), 0); dp = ImageDraw.Draw(pg)      # tinta (para multiplicar)
@@ -407,5 +417,63 @@ def render(spec, seed):
     out = D * (1 - inside[..., None]) + pageimg * inside[..., None]
     del U, V, du, bend, shade, pageimg, D, P, page
     out = downs(out.astype(np.float32))
-    return grade(out, rng, hot=(0.58, 0.32) if nm != "antiga" else (0.5, 0.45),
-                 vign=0.45 if nm in ("aberta", "antiga") else 0.32, dof=2.2 if nm == "aberta" else 0), nm
+    img = grade(out, rng, hot=(0.58, 0.32) if nm != "antiga" else (0.5, 0.45),
+                vign=0.45 if nm in ("aberta", "antiga") else 0.32, dof=2.2 if nm == "aberta" else 0)
+    if spec.get("caneta"):
+        img = caneta(img, spec["caneta"] if isinstance(spec["caneta"], dict) else {}, rng, c["hl"])
+    return img, nm
+
+
+def caneta(img, o, rng, hlc):
+    """caneta ou marca-texto apoiado sobre a página, com sombra (desenhado em 2x)"""
+    tipo = o.get("tipo", "marca-texto")
+    lado = o.get("lado", "dir")
+    ang = o.get("angulo", 32 if lado == "dir" else -32)
+    k = 2
+    L, T = (820, 74) if tipo == "marca-texto" else (900, 46)
+    lay = Image.new("RGBA", (L * k + 40, T * k + 40), (0, 0, 0, 0))
+    arr = np.zeros((T * k, L * k, 4), np.float32)
+    yy = np.linspace(-1, 1, T * k)[:, None]
+    shade = (0.55 + 0.6 * np.sqrt(np.clip(1 - yy ** 2, 0, 1)) + 0.35 * np.exp(-((yy + 0.45) / 0.18) ** 2))
+    if tipo == "marca-texto":
+        body = np.array(o.get("cor", hlc), np.float32); cap = body * 0.82; tip = np.array([60, 60, 60], np.float32)
+        ink_tip = body * 0.9
+    else:
+        body = np.array(o.get("cor", (28, 30, 48)), np.float32); cap = np.array([200, 170, 90], np.float32); tip = np.array([190, 180, 160], np.float32)
+        ink_tip = np.array([20, 20, 20], np.float32)
+    xs = np.arange(L * k)[None, :]
+    colr = np.where((xs < 0.26 * L * k)[..., None], cap, body)
+    rgb = colr * shade[..., None]
+    if tipo == "caneta":
+        clip_ = (xs > 0.04 * L * k) & (xs < 0.24 * L * k) & (np.abs(yy + 0.62) < 0.18)
+        rgb = np.where(clip_[..., None], np.array([230, 205, 120]) * 1.05, rgb)
+        ring = (np.abs(xs - 0.26 * L * k) < 6 * k)
+        rgb = np.where(ring[..., None], np.array([215, 185, 100]) * shade[..., None], rgb)
+    else:
+        lbl = (xs > 0.42 * L * k) & (xs < 0.7 * L * k) & (np.abs(yy) < 0.35)
+        rgb = np.where(lbl[..., None], rgb * 0.9 + 18, rgb)
+    a = np.ones((T * k, L * k), np.float32)
+    # ponta (cone) no fim direito
+    tipL = int((0.13 if tipo == "marca-texto" else 0.11) * L * k)
+    xt = (xs - (L * k - tipL)) / tipL
+    cone = xt > 0
+    half = 1 - np.clip(xt, 0, 1) * (0.55 if tipo == "marca-texto" else 0.82)
+    a = np.where(cone, (np.abs(yy) < half).astype(np.float32), a)
+    tipc = np.where((xt > 0.78)[..., None], ink_tip, tip)
+    rgb = np.where(cone[..., None], tipc * shade[..., None], rgb)
+    # pontas arredondadas atrás
+    a = np.where(xs < 10 * k, (np.abs(yy) < np.sqrt(np.clip(xs / (10 * k), 0, 1))).astype(np.float32), a)
+    arr[..., :3] = np.clip(rgb, 0, 255); arr[..., 3] = a * 255
+    pen = Image.fromarray(arr.astype(np.uint8), "RGBA").filter(ImageFilter.GaussianBlur(0.8))
+    lay.paste(pen, (20, 20))
+    lay = lay.rotate(ang, resample=Image.BICUBIC, expand=True)
+    lay = lay.resize((lay.width // k, lay.height // k), Image.LANCZOS)
+    base = Image.fromarray(img).convert("RGBA")
+    px = o.get("x", (W - lay.width + 140) if lado == "dir" else -140)
+    py = o.get("y", H - lay.height + 60)
+    sh = Image.new("RGBA", lay.size, (0, 0, 0, 0)); sh.putalpha(lay.split()[3].point(lambda v: int(v * 0.55)))
+    sh = sh.filter(ImageFilter.GaussianBlur(9))
+    base.alpha_composite(sh, (int(px + 18), int(py + 22)))
+    base.alpha_composite(lay, (int(px), int(py)))
+    out = np.asarray(base.convert("RGB")).astype(np.float32) + rng.normal(0, 1.5, (H, W, 3))
+    return np.clip(out, 0, 255).astype(np.uint8)

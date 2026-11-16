@@ -1,0 +1,19 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-08-salmo119",
+ "modelo": 4,
+ "titulo_leitura": "Salmo 119,105",
+ "texto": [
+  "^105 “==Tua palavra é lâmpada para os meus pés== e luz para o meu caminho.”",
+  "Leia, reze, siga. ==Ele mostra o próximo passo.==",
+  "Se você quer luz, ==escreva “Amém”==."
+ ],
+ "hl_cor": "rosa",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "dir"
+ }
+}

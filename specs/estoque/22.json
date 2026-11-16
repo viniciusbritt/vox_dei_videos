@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-22-isaias40",
+ "modelo": 2,
+ "titulo_leitura": "Isaías 40,31",
+ "texto": [
+  "^31 “==Os que esperam no Senhor renovam as suas forças==, sobem com asas como águias.”",
+  "Cansado? ==Ele renova você.==",
+  "Receba, ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "fonte_corpo": "librebaskerville-400.ttf",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "esq"
+ }
+}

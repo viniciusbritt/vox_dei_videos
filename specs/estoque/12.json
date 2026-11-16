@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-12-mateus5",
+ "modelo": 4,
+ "titulo_leitura": "Mateus 5,4",
+ "texto": [
+  "^4 “==Felizes os que choram==, porque serão consolados.”",
+  "Suas lágrimas não são em vão. ==O consolo vem.==",
+  "Se você precisa, ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "fonte_corpo": "librebaskerville-400.ttf",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "dir"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-26-1corintios13",
+ "modelo": 2,
+ "titulo_leitura": "1 Coríntios 13,4",
+ "texto": [
+  "^4 “==O amor é paciente, o amor é bondoso.==”",
+  "Ame hoje como Deus ama você.",
+  "Se você quer esse amor, ==escreva “Amém”==."
+ ],
+ "hl_cor": "rosa",
+ "fonte_corpo": "lora-medium.ttf",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "esq"
+ }
+}

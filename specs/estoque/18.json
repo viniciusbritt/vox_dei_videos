@@ -1,0 +1,19 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-18-joao16",
+ "modelo": 2,
+ "titulo_leitura": "João 16,33",
+ "texto": [
+  "^33 “No mundo tereis aflições, ==mas tende coragem: eu venci o mundo.==”",
+  "Seu problema já tem dono. ==Jesus venceu.==",
+  "Receba, ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "esq"
+ }
+}

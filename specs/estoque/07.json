@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-07-salmo139",
+ "modelo": 3,
+ "titulo_leitura": "Salmo 139,14",
+ "texto": [
+  "^14 “==Eu te louvo porque me fizeste de modo tão admirável.==”",
+  "Você foi feito com amor. ==Nada em você é acaso.==",
+  "Se você agradece, ==escreva “Amém”==."
+ ],
+ "hl_cor": "verde",
+ "fonte_corpo": "librebaskerville-400.ttf",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "esq"
+ }
+}
