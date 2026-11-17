@@ -103,7 +103,11 @@ def text_image(seg, out):
     X, MAXW = 120, 820
     f_tit = font("montserrat-800.ttf", 30)
     body = seg["tela"]
+<<<<<<< Updated upstream
     size = 54 if len(body) < 140 else 46 if len(body) < 260 else 40 if len(body) < 380 else 35
+=======
+    size = 62 if len(body) < 100 else 56 if len(body) < 170 else 48 if len(body) < 260 else 42 if len(body) < 420 else 36
+>>>>>>> Stashed changes
     f_body = font("lora-medium.ttf", size)
     f_cnt = font("cinzel-bold.ttf", 96); f_cnt2 = font("montserrat-500.ttf", 28)
     lines = wrap(d, body, f_body, MAXW)
