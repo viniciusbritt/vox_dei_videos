@@ -11,6 +11,8 @@ Uso:
 Sobe como private + publishAt (vira público na hora marcada), pt-BR, categoria 22,
 containsSyntheticMedia true, e define a thumbnail. Usa YT_CLIENT_ID, YT_CLIENT_SECRET e
 YT_REFRESH_TOKEN do ambiente (escopo youtube.force-ssl). Nunca imprime os valores.
+Depois do upload: siga /mnt/project-files/producao/AGENDA-YOUTUBE.md para o vídeo aparecer na agenda
+(scripts/agenda_youtube.py lista os programados pela API).
 """
 import json
 import os
