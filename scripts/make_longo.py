@@ -35,11 +35,13 @@ def run(cmd):
 
 
 # ---------------------------------------------------------------- imagens
-def base_image(path, out):
-    im = Image.open(path).convert("RGB").resize((W, H), Image.LANCZOS)
+def base_image(path, out, lado="esq", forca=0.35, zoom=1.0):
+    im = Image.open(path).convert("RGB").resize((int(W * zoom), int(H * zoom)), Image.LANCZOS)
     a = np.asarray(im).astype(np.float32)
-    x = np.linspace(0, 1, W)[None, :, None]
-    shade = np.clip(1 - 0.35 * np.clip((0.55 - x) / 0.55, 0, 1), 0, 1)   # escurece um pouco a área do texto
+    x = np.linspace(0, 1, im.width)[None, :, None]
+    if lado == "dir":
+        x = 1 - x
+    shade = np.clip(1 - forca * np.clip((0.55 - x) / 0.55, 0, 1), 0, 1)   # escurece a área do texto
     Image.fromarray(np.clip(a * shade, 0, 255).astype(np.uint8)).save(out)
 
 
@@ -100,14 +102,11 @@ def wrap(d, text, f, maxw):
 def text_image(seg, out):
     """Bloco de texto à esquerda: título dourado, oração em creme, contador grande."""
     L = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(L)
-    X, MAXW = 120, 820
+    MAXW = 820
+    X = 120 if seg.get("lado", "esq") == "esq" else W - 120 - MAXW
     f_tit = font("montserrat-800.ttf", 30)
     body = seg["tela"]
-<<<<<<< Updated upstream
-    size = 54 if len(body) < 140 else 46 if len(body) < 260 else 40 if len(body) < 380 else 35
-=======
     size = 62 if len(body) < 100 else 56 if len(body) < 170 else 48 if len(body) < 260 else 42 if len(body) < 420 else 36
->>>>>>> Stashed changes
     f_body = font("lora-medium.ttf", size)
     f_cnt = font("cinzel-bold.ttf", 96); f_cnt2 = font("montserrat-500.ttf", 28)
     lines = wrap(d, body, f_body, MAXW)
@@ -229,14 +228,32 @@ def main():
                 p = os.path.join(pasta, "audio", f"{s['audio']}.{ext}")
                 if os.path.exists(p) and s["audio"] not in voz:
                     voz[s["audio"]] = read_audio(p)
+    # segmento com "paginas": [{"tela":..., "peso":n}] divide a fala em várias telas (tempo proporcional ao peso)
+    exp = []
+    for s in segs:
+        pg = s.get("paginas")
+        if not pg:
+            exp.append(s); continue
+        a = voz.get(s["audio"])
+        fala = len(a) / SR if a is not None else len(s["fala"].split()) / WPS
+        tot = sum(q.get("peso", len(q["tela"])) for q in pg); acc = 0
+        for j, q in enumerate(pg):
+            d_ = fala * q.get("peso", len(q["tela"])) / tot + (s.get("pausa", 1.0) if j == len(pg) - 1 else 0)
+            n = dict(s); n.update(tela=q["tela"], _dur=d_, _fala=fala * q.get("peso", len(q["tela"])) / tot)
+            n.pop("paginas"); n["audio"] = s["audio"] if j == 0 else None
+            n["_ref"] = s["audio"]
+            exp.append(n)
+    segs = exp
     t = INTRO; tl = []
     for s in segs:
+        if "_dur" in s:
+            tl.append((t, s["_dur"], s["_fala"])); t += s["_dur"]; continue
         a = voz.get(s["audio"])
         fala = len(a) / SR if a is not None else len(s["fala"].split()) / WPS
         dur = fala + s.get("pausa", 1.0)
         tl.append((t, dur, fala)); t += dur
     total = t + OUTRO
-    falt = sorted({s["audio"] for s in segs} - set(voz))
+    falt = sorted({s["audio"] for s in segs if s["audio"]} - set(voz))
     print(f"duração: {total/60:.1f} min · áudios encontrados: {len(voz)} · faltando: {len(falt)}")
 
     # 2) trilha: narração + piano (abaixa sob a voz)
@@ -263,17 +280,38 @@ def main():
     del narr, pn, env, mix
 
     # 3) camadas fixas
-    base = os.path.join(tmp, "base.png"); base_image(os.path.join(pasta, spec["fundo"]), base)
+    zoom = spec.get("zoom", 0.0)                     # ex.: 0.06 = aproxima 6% ao longo de cada imagem
+    bases = {}
+    def get_base(s):
+        f = s.get("fundo") if s else None
+        f = f or spec["fundo"]; lado = (s or {}).get("lado", "esq")
+        k = (f, lado)
+        if k not in bases:
+            o = os.path.join(tmp, f"base_{len(bases)}.png")
+            base_image(os.path.join(pasta, f), o, lado, spec.get("sombra", 0.35), 1 + zoom)
+            bases[k] = o
+        return k, bases[k]
     glow = os.path.join(tmp, "glow.png"); glow_image(glow)
     part = os.path.join(ROOT, "longos", "_cache", "particulas.mov"); os.makedirs(os.path.dirname(part), exist_ok=True)
     particles_video(part)
+    tem_vela = "vela" in spec
     gx, gy = spec.get("vela", [0.93, 0.75]); gx = int(gx * W) - 260; gy = int(gy * H) - 260
 
     # 4) partes: intro (só fundo), um trecho por segmento, final
     parts = []
     pieces = [(0, INTRO, None)] + [(st, d_, s) for s, (st, d_, _) in zip(segs, tl)] + [(total - OUTRO, OUTRO, None)]
     prev_txt = None
+    keys = [get_base(q)[0] if q is not None else None for _, _, q in pieces]
+    keys[0] = keys[1] if len(keys) > 1 else keys[0]; keys[-1] = keys[-2] if len(keys) > 1 else keys[-1]
     for i, (st, d_, s) in enumerate(pieces):
+        kb, base = get_base(s if s else (pieces[1][2] if i == 0 else pieces[-2][2]))
+        # início/fim da corrida desta imagem (para o zoom lento contínuo)
+        a_ = i
+        while a_ > 0 and keys[a_ - 1] == kb: a_ -= 1
+        b_ = i
+        while b_ < len(keys) - 1 and keys[b_ + 1] == kb: b_ += 1
+        r0 = pieces[a_][0]; r1 = pieces[b_][0] + pieces[b_][1]; rd = max(r1 - r0, 1)
+        img_in = i > 0 and keys[i - 1] != kb; img_out = i < len(keys) - 1 and keys[i + 1] != kb
         txt = None
         if s is not None and (s["tela"] or s["titulo"]):
             txt = os.path.join(tmp, f"txt_{i:03d}.png"); text_image(s, txt)
@@ -287,9 +325,17 @@ def main():
                   "-loop", "1", "-framerate", str(FPS), "-i", glow]
         flick = (f"0.80+0.10*sin(2*PI*(T+{st:.3f})*1.3)+0.06*sin(2*PI*(T+{st:.3f})*3.7)"
                  f"+0.04*sin(2*PI*(T+{st:.3f})*7.9)")
-        fg = (f"[2:v]format=rgba,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='alpha(X,Y)*({flick})'[gl];"
-              f"[0:v][gl]overlay={gx}:{gy}:format=auto[b1];"
-              f"[1:v]format=rgba,colorchannelmixer=aa=0.75[pt];[b1][pt]overlay=0:0[b2]")
+        if zoom:
+            pr = f"(({st - r0:.3f}+t)/{rd:.3f})"                  # progresso 0..1 da imagem: desliza devagar (Ken Burns leve)
+            z0 = (f"[0:v]crop={W}:{H}:x='(iw-{W})*{pr}':y='(ih-{H})*(1-{pr})'[bz];")
+        else:
+            z0 = f"[0:v]null[bz];"
+        if tem_vela:
+            fg = (z0 + f"[2:v]format=rgba,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='alpha(X,Y)*({flick})'[gl];"
+                  f"[bz][gl]overlay={gx}:{gy}:format=auto[b1];"
+                  f"[1:v]format=rgba,colorchannelmixer=aa=0.75[pt];[b1][pt]overlay=0:0[b2]")
+        else:
+            fg = (z0 + f"[1:v]format=rgba,colorchannelmixer=aa=0.75[pt];[bz][pt]overlay=0:0[b2]")
         last = "b2"
         if txt:
             inputs += ["-loop", "1", "-framerate", str(FPS), "-i", txt]
@@ -299,6 +345,10 @@ def main():
             if fout:
                 tf += f",fade=t=out:st={max(0, d_ - 0.6):.3f}:d=0.6:alpha=1"
             fg += f";{tf}[tx];[b2][tx]overlay=0:0[b3]"; last = "b3"
+        if img_in:
+            fg += f";[{last}]fade=t=in:st=0:d=1.2[oi]"; last = "oi"
+        if img_out:
+            fg += f";[{last}]fade=t=out:st={max(0, d_ - 1.2):.3f}:d=1.2[oo]"; last = "oo"
         if i == 0:
             fg += f";[{last}]fade=t=in:st=0:d=2[o]"; last = "o"
         if i == len(pieces) - 1:
