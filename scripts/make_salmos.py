@@ -218,6 +218,15 @@ def main():
     os.makedirs(work, exist_ok=True)
     tmp = os.path.join(work, "tmp"); os.makedirs(tmp, exist_ok=True)
 
+    global UNITS, INTRO_B, PONTE, FINAL, RAIN_FINAL, SHADE, SCENE_SEQ, PASSES
+    cfgp = os.path.join(pasta, "config.json")      # sobrescreve UNITS, INTRO_B, PONTE, FINAL, RAIN_FINAL (min), SCENE_SEQ, SHADE
+    if os.path.exists(cfgp):
+        cfg = json.load(open(cfgp, encoding="utf-8"))
+        UNITS = [(a, b) for a, b in cfg.get("UNITS", UNITS)]
+        INTRO_B = cfg.get("INTRO_B", INTRO_B); PONTE = cfg.get("PONTE", PONTE); FINAL = cfg.get("FINAL", FINAL)
+        PASSES = [tuple(x) for x in cfg.get("PASSES", PASSES)]
+        RAIN_FINAL = cfg.get("RAIN_FINAL_MIN", RAIN_FINAL / 60) * 60; SCENE_SEQ = cfg.get("SCENE_SEQ", SCENE_SEQ)
+        SHADE = {int(k): v for k, v in cfg.get("SHADE", SHADE).items()}
     blocks = load_blocks(pasta)
     words = json.load(open(os.path.join(pasta, "words.json"), encoding="utf-8"))
     aud, lead = {}, {}
@@ -242,7 +251,7 @@ def main():
             for n in PONTE:
                 add(n, None, g + 3, pi)
     for k, n in enumerate(FINAL):
-        add(n, None, 3.0 if k == 0 else 0.0, 4)
+        add(n, None, 3.0 if k < len(FINAL) - 1 else 0.0, 4)
     t_rain = t
     total = t_rain + RAIN_FINAL
     if nprev:
