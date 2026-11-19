@@ -55,3 +55,6 @@ O estilo `biblia` (página clara com grifo animado) continua disponível no gera
 - Pedido da Helo (11/11) para quebrar o molde Bíblia: oração inteira rezada por voz calma, texto que acende palavra por palavra, fundo escuro com luz de vela, gancho "Pare um instante" no 1º quadro e CTA "escreva Amém". Cerca de 40 s.
 - Gerador: `python3 scripts/make_oracao.py specs/<spec>.json` (exemplo: `specs/2026-11-12-manha-oracao.json`). Voz por `edge-tts` (`pip install edge-tts`), fica em `<saida>/voz/`. Render demora ~8 min.
 - 1º vídeo: São Miguel Arcanjo, 12/11 7h. Ver o resultado antes de repetir o formato.
+
+## Fila do Facebook (pedido da Helo, 19/11)
+Ao AGENDAR qualquer Short (corte ou Bíblia no molde Fábio), acrescente uma linha em `/mnt/project-files/facebook/FILA-FACEBOOK.md`: arquivo mp4, título, link do YouTube (e data/hora). NÃO poste no Facebook: quem posta é a thread "Aquecer página do Facebook".
