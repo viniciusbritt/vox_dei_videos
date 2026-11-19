@@ -35,6 +35,8 @@ PASSES = [(3.0, 3.0), (12.0, 30.0), (18.0, 50.0)]
 HOLD = 6.0                          # texto fica na tela até 6 s depois da fala
 SCENE_SEQ = [1, 2, 3, 1]            # troca a cada ~10 min; a 4 é a chuva final
 SCENE_EVERY = 600.0
+RAIN_VOL = 0.0                       # som de chuva (Helo pediu sem chuva nos vídeos de sexta, 19/11); 1.0 = como em 13/11
+PIANO_VOL = 0.6
 SHADE = {1: 0.55, 2: 0.55, 3: 0.72, 4: 0.0}   # escurecimento do lado esquerdo (onde entra o texto)
 MAXCH = 270                          # máx. de caracteres por página de texto
 
@@ -218,13 +220,14 @@ def main():
     os.makedirs(work, exist_ok=True)
     tmp = os.path.join(work, "tmp"); os.makedirs(tmp, exist_ok=True)
 
-    global UNITS, INTRO_B, PONTE, FINAL, RAIN_FINAL, SHADE, SCENE_SEQ, PASSES
+    global UNITS, INTRO_B, PONTE, FINAL, RAIN_FINAL, SHADE, SCENE_SEQ, PASSES, RAIN_VOL, PIANO_VOL
     cfgp = os.path.join(pasta, "config.json")      # sobrescreve UNITS, INTRO_B, PONTE, FINAL, RAIN_FINAL (min), SCENE_SEQ, SHADE
     if os.path.exists(cfgp):
         cfg = json.load(open(cfgp, encoding="utf-8"))
         UNITS = [(a, b) for a, b in cfg.get("UNITS", UNITS)]
         INTRO_B = cfg.get("INTRO_B", INTRO_B); PONTE = cfg.get("PONTE", PONTE); FINAL = cfg.get("FINAL", FINAL)
         PASSES = [tuple(x) for x in cfg.get("PASSES", PASSES)]
+        RAIN_VOL = cfg.get("RAIN_VOL", RAIN_VOL); PIANO_VOL = cfg.get("PIANO_VOL", PIANO_VOL)
         RAIN_FINAL = cfg.get("RAIN_FINAL_MIN", RAIN_FINAL / 60) * 60; SCENE_SEQ = cfg.get("SCENE_SEQ", SCENE_SEQ)
         SHADE = {int(k): v for k, v in cfg.get("SHADE", SHADE).items()}
     blocks = load_blocks(pasta)
@@ -343,7 +346,7 @@ def main():
     if t_rain:
         a0 = int(t_rain * SR); ramp = int(20 * SR)
         renv[a0:a0 + ramp] = np.linspace(1, 1.35, ramp); renv[a0 + ramp:] = 1.35
-    mix = narr + pn * env * 0.42 + rain * renv * 1.0
+    mix = narr + pn * env * PIANO_VOL + rain * renv * RAIN_VOL
     fi, fo = int(3 * SR), int(10 * SR)
     mix[:fi] *= np.linspace(0, 1, fi); mix[-fo:] *= np.linspace(1, 0, fo)
     wav = os.path.join(work, "trilha.wav")
@@ -351,6 +354,12 @@ def main():
         w_.setnchannels(1); w_.setsampwidth(2); w_.setframerate(SR)
         w_.writeframes((np.clip(mix, -1, 1) * 32767).astype(np.int16).tobytes())
     del narr, pn, env, rain, renv, mix
+
+    if "--so-audio" in args:       # troca só a trilha do salmos.mp4 já renderizado
+        old = os.path.join(work, "salmos.mp4"); novo = os.path.join(work, "salmos-novo-audio.mp4")
+        run(["ffmpeg", "-y", "-v", "error", "-i", old, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy",
+             "-c:a", "aac", "-b:a", "160k", "-ac", "2", "-shortest", "-movflags", "+faststart", novo])
+        print("ok:", novo); return
 
     # ---- render das peças
     parts, cache = [], {}
