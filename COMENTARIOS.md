@@ -19,3 +19,9 @@ Roda todo dia às 23h09 (Brasília), depois dos picos de comentários. Responde 
 - No máximo 1 emoji. Não repita a mesma resposta no mesmo dia.
 - Não responda: spam, links, ofensas, golpes, política. Comentário com pedido de oração sério (doença, luto) → resposta acolhedora, e cite na mensagem para a Helo.
 - Nunca prometa algo em nome da Helo, nem peça dinheiro ou dados.
+
+## Nome do canal (decidido pela Helo em 19/11/2026)
+- O canal agora se chama **Salmos do Céu** (antes "Vox Dei • Oração Católica"). Nas respostas, se citar o canal, diga "Salmos do Céu". Não use "Vox Dei" nem "Oração Católica".
+- Se alguém perguntar do nome antigo, explique com carinho que o canal mudou de nome e que o conteúdo é o mesmo.
+- Prefira "oração/orar" a "rezar". O Terço continua como série.
+- Fonte única: `/mnt/project-files/mentor/NOME-DO-CANAL.md`.
