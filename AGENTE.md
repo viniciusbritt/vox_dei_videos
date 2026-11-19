@@ -1,4 +1,7 @@
-# Agente diário da Vox Dei
+# Agente diário do canal "Salmos do Céu" (antes Vox Dei)
+
+> NOME NOVO (19/11, Helo): **Salmos do Céu**. Nos vídeos, títulos, descrições e marca d'água NÃO usar "Vox Dei" nem "Oração Católica"; usar "orar/oração" em vez de "rezar/reze". Detalhes em /mnt/project-files/mentor/NOME-DO-CANAL.md. Os nomes antigos abaixo (repo, Buffer, "Inscreva-se na Vox Dei") são só históricos: troque por "Salmos do Céu".
+
 
 Roda às 5h03 (Brasília) e cuida dos Shorts do **dia seguinte**. Leia só este arquivo; não precisa reler histórico de thread.
 Autorização: a Helo liberou agendar Shorts sem aprovação dela (31/10/2026). Exceção atual: ver "Frequência".

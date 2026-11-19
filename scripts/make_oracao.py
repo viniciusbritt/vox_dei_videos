@@ -129,7 +129,7 @@ def main(spec_path):
     ft = font("cinzel-bold.ttf", 40); tt = spec.get("titulo_topo", "ORAÇÃO")
     tw_ = d.textlength(tt, font=ft); d.text(((W - tw_) / 2, 250), tt, font=ft, fill=GOLD + (230,))
     d.line([(W / 2 - 230, 318), (W / 2 + 230, 318)], fill=GOLD + (120,), width=2)
-    fs = font("lora-italic.ttf", 40); st_ = spec.get("subtitulo_topo", "reze comigo, em voz baixa")
+    fs = font("lora-italic.ttf", 40); st_ = spec.get("subtitulo_topo", "ore comigo, em voz baixa")
     sw = d.textlength(st_, font=fs); d.text(((W - sw) / 2, 336), st_, font=fs, fill=CREAM + (170,))
     TOP = np.asarray(top).astype(np.float32)
 
