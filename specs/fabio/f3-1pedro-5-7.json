@@ -2,15 +2,14 @@
  "saida": "shorts/fabio",
  "nome": "fabio-03-1pedro-5-7",
  "duracao": 10,
- "fundo": "vela",
- "abertura": "Em nome do Pai, do Filho e do Espírito Santo.",
+ "fundo": "biblia-branca",
  "referencia": "1 Pedro 5,7",
  "versiculo": "“Lançai sobre ele ==toda a vossa ansiedade==, porque ele tem cuidado de vós.”",
  "aplicacao": [
-  "Aquela preocupação que não te deixa dormir, entregue a Deus.",
-  "Ele cuida de você ==melhor do que você imagina==.",
-  "Descanse: Ele está no controle."
+  "Entregue hoje a Deus aquilo que tira o seu sono. Ele cuida de você."
  ],
- "cta": "Se você crê, escreva ==AMÉM==.",
- "musica": "luz"
+ "cta": "Se você crê, escreva Amém!",
+ "musica": "luz",
+ "molde": "grifado",
+ "abertura": ""
 }

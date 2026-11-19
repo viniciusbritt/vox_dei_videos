@@ -228,13 +228,79 @@ def card_layer(box):
     return sh, ph
 
 
+# ---------------------------------------------------------------- molde "grifado" (Helo 19/11, ref. João 16:33 / Mateus 21:22)
+def bg_biblia_desfocada(rng, modelo=2, zoom=1.35, rot=-4, quente=True):
+    import biblia_foto as bf
+    BG, _ = bf.render({"titulo_leitura": "Salmo 27,1", "modelo": modelo,
+                       "texto": [" ".join(bf.FILLER[:70]), " ".join(bf.FILLER[30:100])]},
+                      int(rng.integers(1 << 30)))
+    im = Image.fromarray(BG).rotate(rot, Image.BICUBIC, expand=False, fillcolor=(40, 28, 18))
+    cw, ch = int(W / zoom), int(H / zoom)
+    x0, y0 = (W - cw) // 2, int((H - ch) * 0.85)
+    im = im.crop((x0, y0, x0 + cw, y0 + ch)).resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(11))
+    a = np.asarray(im, np.float32)
+    a = a * np.array([1.0, 0.93, 0.80]) + np.array([12, 4, -8]) if quente else a * np.array([0.97, 0.99, 1.03])
+    return _vig(a, 0.45), dict(card=False)
+
+
+def bg_cartao_bege(rng):
+    base = _grad((214, 178, 140), (198, 160, 122)) + _noise(rng, 6)
+    return _vig(base, 0.22), dict(card=True)
+
+
+FUNDOS.update({"biblia-desfocada": lambda r: bg_biblia_desfocada(r, 2, 1.35, -4),
+               "biblia-antiga": lambda r: bg_biblia_desfocada(r, 3, 1.5, 3),
+               "biblia-branca": lambda r: bg_biblia_desfocada(r, 4, 1.4, -2, False),
+               "cartao-bege": bg_cartao_bege})
+
+
+def render_grifado(spec):
+    """Texto preto grande, TODAS as linhas grifadas em verde-limão (linha a linha), sem abertura."""
+    ink = (12, 12, 10, 255)
+    mw = W - 2 * X_MARGIN - 20
+    def rows_for(sc):
+        f_ref = fnt("tinos-700.ttf", 118 * sc); f_txt = fnt("tinos-700.ttf", 70 * sc)
+        rows = []
+        for i, (txt, f, gap) in enumerate([(spec["referencia"], f_ref, 0), (spec["versiculo"], f_txt, 40)] +
+                                           [(a, f_txt, 30) for a in spec["aplicacao"]] + [(spec["cta"], f_txt, 30)]):
+            txt = txt.replace("==", "")
+            ws = words_of(txt); n0 = len(wrap(ws, f, mw)); lo, hi = mw * 0.4, mw
+            while hi - lo > 4:                       # quebra equilibrada: menor largura com o mesmo nº de linhas
+                mid_ = (lo + hi) / 2
+                if len(wrap(ws, f, mid_)) > n0: lo = mid_
+                else: hi = mid_
+            for k, ln in enumerate(wrap(ws, f, hi)):
+                rows.append((" ".join(w for w, _ in ln), f, gap if k == 0 else 0))
+        total = sum(g + int(f.size * 1.18) for _, f, g in rows)
+        return rows, total
+    sc = 1.3
+    while True:
+        rows, total = rows_for(sc)
+        if total <= BOTTOM - TOP or sc < 0.6:
+            break
+        sc -= 0.02
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(layer)
+    y = TOP + (BOTTOM - TOP - total) // 2; top0 = y
+    for txt, f, gap in rows:
+        y += gap; lh = int(f.size * 1.18); asc, desc = f.getmetrics()
+        lw = f.getlength(txt); x = (W - lw) / 2
+        ty = y + (lh - asc - desc) // 2
+        d.rounded_rectangle((x - 16, y + 2, x + lw + 16, y + lh - 2), radius=12, fill=LIME + (240,))
+        d.text((x, ty), txt, font=f, fill=ink)
+        y += lh
+    return layer, (top0, y, sc)
+
+
 def main(spec_path):
     spec = json.load(open(spec_path, encoding="utf-8"))
     outdir = os.path.join(ROOT, spec["saida"]); os.makedirs(outdir, exist_ok=True)
     name = spec["nome"]; seed = zlib.crc32(name.encode()); rng = np.random.default_rng(seed)
     DUR = int(spec.get("duracao", 10))
     bg, st = FUNDOS[spec["fundo"]](rng)
-    text, hl, box = render_text(spec, st["accent"], st.get("dark", False))
+    if spec.get("molde", "grifado") == "grifado":
+        text, box = render_grifado(spec); hl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    else:
+        text, hl, box = render_text(spec, st["accent"], st.get("dark", False))
     comp = Image.fromarray(bg.clip(0, 255).astype(np.uint8)).convert("RGBA")
     if st.get("card"):
         sh, ph = card_layer(box); comp = Image.alpha_composite(Image.alpha_composite(comp, sh), ph)
