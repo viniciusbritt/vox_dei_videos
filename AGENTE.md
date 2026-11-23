@@ -58,3 +58,6 @@ O estilo `biblia` (página clara com grifo animado) continua disponível no gera
 
 ## Fila do Facebook (pedido da Helo, 19/11)
 Ao AGENDAR qualquer Short (corte ou Bíblia no molde Fábio), acrescente uma linha em `/mnt/project-files/facebook/FILA-FACEBOOK.md`: arquivo mp4, título, link do YouTube (e data/hora). NÃO poste no Facebook: quem posta é a thread "Aquecer página do Facebook".
+
+## Limite de uploads por dia (regra da Helo, 23/11/2026)
+A cota diária da API do YouTube é de 10.000 pontos (zera ~5h de Brasília). Cada upload de vídeo custa 1.600 pontos; resposta a comentário, capa, tags e playlist custam 50. **No máximo 5 uploads por dia** pela API (somando Shorts, longos e cortes). Lotes grandes devem ser divididos em dois ou mais dias. Ver cota-api-youtube na memória do projeto.
