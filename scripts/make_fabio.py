@@ -291,32 +291,73 @@ def render_grifado(spec):
     return layer, (top0, y, sc)
 
 
+def render_quadro(texto, big=False):
+    """Um quadro de texto grande e centralizado (teste em 7-8 s): todas as linhas grifadas."""
+    ink = (12, 12, 10, 255); mw = W - 2 * X_MARGIN - 20
+    def rows_for(sc):
+        f = fnt("tinos-700.ttf", (104 if big else 82) * sc); rows = []
+        for blk in texto.split("\n"):
+            ws = words_of(blk.replace("==", "")); n0 = len(wrap(ws, f, mw)); lo, hi = mw * 0.4, mw
+            while hi - lo > 4:
+                m_ = (lo + hi) / 2
+                if len(wrap(ws, f, m_)) > n0: lo = m_
+                else: hi = m_
+            for k, ln in enumerate(wrap(ws, f, hi)):
+                rows.append((" ".join(w for w, _ in ln), f, 34 if k == 0 and rows else 0))
+        return rows, sum(g + int(f.size * 1.2) for _, f, g in rows)
+    sc = 1.3
+    while True:
+        rows, total = rows_for(sc)
+        if total <= BOTTOM - TOP - 200 or sc < 0.6:
+            break
+        sc -= 0.02
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(layer)
+    y = TOP + 100 + (BOTTOM - TOP - 200 - total) // 2
+    for txt, f, gap in rows:
+        y += gap; lh = int(f.size * 1.2); asc, desc = f.getmetrics(); lw = f.getlength(txt); x = (W - lw) / 2
+        d.rounded_rectangle((x - 16, y + 2, x + lw + 16, y + lh - 2), radius=12, fill=LIME + (240,))
+        d.text((x, y + (lh - asc - desc) // 2), txt, font=f, fill=ink); y += lh
+    return layer
+
+
 def main(spec_path):
     spec = json.load(open(spec_path, encoding="utf-8"))
     outdir = os.path.join(ROOT, spec["saida"]); os.makedirs(outdir, exist_ok=True)
     name = spec["nome"]; seed = zlib.crc32(name.encode()); rng = np.random.default_rng(seed)
     DUR = int(spec.get("duracao", 10))
     bg, st = FUNDOS[spec["fundo"]](rng)
-    if spec.get("molde", "grifado") == "grifado":
+    quadros = None
+    if spec.get("molde") == "quadros":
+        text = hl = None; box = (0, 0, 0)
+        quadros = [(q["t0"], q["t1"], render_quadro(q["texto"], q.get("grande", False))) for q in spec["quadros"]]
+    elif spec.get("molde", "grifado") == "grifado":
         text, box = render_grifado(spec); hl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     else:
         text, hl, box = render_text(spec, st["accent"], st.get("dark", False))
-    comp = Image.fromarray(bg.clip(0, 255).astype(np.uint8)).convert("RGBA")
-    if st.get("card"):
-        sh, ph = card_layer(box); comp = Image.alpha_composite(Image.alpha_composite(comp, sh), ph)
-    comp = Image.alpha_composite(Image.alpha_composite(comp, hl), text).convert("RGB")
+    comp0 = Image.fromarray(bg.clip(0, 255).astype(np.uint8)).convert("RGBA")
+    if quadros:
+        comps = [Image.alpha_composite(comp0, q[2]).convert("RGB") for q in quadros]; comp = comps[0]
+    else:
+        comp = comp0
+        if st.get("card"):
+            sh, ph = card_layer(box); comp = Image.alpha_composite(Image.alpha_composite(comp, sh), ph)
+        comp = Image.alpha_composite(Image.alpha_composite(comp, hl), text).convert("RGB"); comps = [comp]
     print("escala da fonte:", round(box[2], 2))
-    base = np.asarray(comp)
     tmp = tempfile.mkdtemp(); vid, wav = os.path.join(tmp, "v.mp4"), os.path.join(tmp, "a.wav")
     ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
                            "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "19",
                            "-preset", "medium", vid], stdin=subprocess.PIPE)
-    big = Image.fromarray(base).resize((int(W * 1.04), int(H * 1.04)), Image.LANCZOS)
-    BW, BH = big.size; big = np.asarray(big)
+    bigs = []
+    for c_ in comps:
+        b_ = Image.fromarray(np.asarray(c_)).resize((int(W * 1.04), int(H * 1.04)), Image.LANCZOS); bigs.append(np.asarray(b_))
+    BH, BW = bigs[0].shape[:2]
     for i in range(FPS * DUR):
-        z = 1.0 + 0.03 * i / (FPS * DUR)         # zoom bem leve, o texto continua legível
+        t = i / FPS; k = 0
+        if quadros:
+            k = max([j for j, q in enumerate(quadros) if t >= q[0]] or [0])
+        z = 1.0 + 0.03 * i / (FPS * DUR)
         cw, ch = int(BW / z), int(BH / z); x0, y0 = (BW - cw) // 2, (BH - ch) // 2
-        fr = Image.fromarray(big[y0:y0 + ch, x0:x0 + cw]).resize((W, H), Image.BILINEAR)
+        fr = Image.fromarray(bigs[k][y0:y0 + ch, x0:x0 + cw]).resize((W, H), Image.BILINEAR)
         ff.stdin.write(np.asarray(fr).tobytes())
     ff.stdin.close(); ff.wait()
     musica_louvor.trilha(spec.get("musica", "aurora"), DUR, wav)
