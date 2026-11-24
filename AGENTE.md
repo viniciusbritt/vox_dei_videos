@@ -61,3 +61,6 @@ Ao AGENDAR qualquer Short (corte ou Bíblia no molde Fábio), acrescente uma lin
 
 ## Limite de uploads por dia (regra da Helo, 23/11/2026)
 A cota diária da API do YouTube é de 10.000 pontos (zera ~5h de Brasília). Cada upload de vídeo custa 1.600 pontos; resposta a comentário, capa, tags e playlist custam 50. **No máximo 5 uploads por dia** pela API (somando Shorts, longos e cortes). Lotes grandes devem ser divididos em dois ou mais dias. Ver cota-api-youtube na memória do projeto.
+
+## Título dos Bíblias das 7h (Mentor, 24/11)
+Manter o molde Fábio e colocar "Escreva AMÉM" no TÍTULO (ex.: `Marcos 11,24 🙏 Escreva AMÉM`). Com isso o Marcos 11,24 teve 11,4 comentários/mil views contra 4,5 do Êxodo 14,14 (sem o pedido no título).
