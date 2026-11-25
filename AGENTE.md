@@ -64,3 +64,6 @@ A cota diária da API do YouTube é de 10.000 pontos (zera ~5h de Brasília). Ca
 
 ## Título dos Bíblias das 7h (Mentor, 24/11)
 Manter o molde Fábio e colocar "Escreva AMÉM" no TÍTULO (ex.: `Marcos 11,24 🙏 Escreva AMÉM`). Com isso o Marcos 11,24 teve 11,4 comentários/mil views contra 4,5 do Êxodo 14,14 (sem o pedido no título).
+
+## Toda data vai para a agenda da Helo (regra permanente, 25/11/2026)
+A Helo abre a agenda (https://claude.ai/artifact/6pfcJwkDWtaFv9KspiVxVw) todo dia. Sempre que você citar uma data à Helo (teste, prazo, revisão, algo que ela deve fazer, resultado que será lido), grave na mesma hora um doc em `plano` com `formato: "teste"`: doc_id `AAAA-MM-DD-teste-HHMM-<slug>`, campos `data`, `hora`, `titulo`, `etapa` ("marcado" ou "feito"), opcional `nota`. Passo a passo em /mnt/project-files/producao/AGENDA-YOUTUBE.md (seção "Testes e avisos com data"). Postagens do YouTube/Facebook/TikTok já entram pelos seus fluxos; esta regra cobre o resto.
