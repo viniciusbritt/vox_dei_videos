@@ -8,6 +8,7 @@ Roda todo dia às 23h09 (Brasília), depois dos picos de comentários. Responde 
 3. `python3 scripts/comentarios.py responder comentarios/AAAA-MM-DD.json`
 4. Commit e push do JSON. Avise a Helo só com um resumo curto (quantas respostas e algum comentário que mereça atenção).
 5. **SEMPRE (pedido da Helo, 25/11/2026):** no resumo, liste cada comentário que ficou SEM resposta, com autor, texto, vídeo e motivo (ex.: só emoji, ofensa, spam, link). Se todos foram respondidos, diga isso.
+   **TEXTO LITERAL (pedido da Helo, 26/11/2026):** copie o texto EXATO do comentário entre aspas, nunca só resuma ("ataque", "ofensa", "comentário agressivo" sozinhos NÃO servem). Exemplo: @Fulano, vídeo "1 Pedro 5,7": "texto exato aqui" (motivo: ofensa).
 
 ## Playlists (só aos domingos)
 `python3 scripts/playlists.py listar > /tmp/canal.json`; todo Short público novo que não está em `playlists/plano.json` entra na playlist do horário (Manhã 7h, Meio-Dia 12h, Noite 20h) e na de tema que combinar; longo novo entra em "Palavra de Deus para Ouvir | Vídeos Longos". Depois `python3 scripts/playlists.py aplicar playlists/plano.json`, commit e push. Não precisa avisar a Helo.
