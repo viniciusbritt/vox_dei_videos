@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-24-josue1",
+ "modelo": 4,
+ "titulo_leitura": "Josué 1,9",
+ "texto": [
+  "^9 “==Sê forte e corajoso.== Não temas, porque o Senhor teu Deus está contigo.”",
+  "Coragem para hoje. ==Você não vai sozinho.==",
+  "Se você vai, ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "fonte_corpo": "cormorantgaramond-600.ttf",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "dir"
+ }
+}

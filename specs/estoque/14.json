@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-14-mateus19",
+ "modelo": 2,
+ "titulo_leitura": "Mateus 19,26",
+ "texto": [
+  "^26 “Para os homens é impossível, ==mas para Deus tudo é possível.==”",
+  "Seu milagre não é grande demais para Ele.",
+  "Se você crê, ==escreva “Amém”==."
+ ],
+ "hl_cor": "rosa",
+ "fonte_corpo": "cormorantgaramond-600.ttf",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "esq"
+ }
+}

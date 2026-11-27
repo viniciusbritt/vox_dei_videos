@@ -1,0 +1,19 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-13-mateus28",
+ "modelo": 1,
+ "titulo_leitura": "Mateus 28,20",
+ "texto": [
+  "^20 “==Eu estarei convosco todos os dias==, até o fim dos tempos.”",
+  "Hoje também. ==Ele não te deixa.==",
+  "Se você sente, ==escreva “Amém”==."
+ ],
+ "hl_cor": "verde",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "dir"
+ }
+}

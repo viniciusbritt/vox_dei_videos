@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-04-salmo27",
+ "modelo": 4,
+ "titulo_leitura": "Salmo 27,14",
+ "texto": [
+  "^14 “==Espera no Senhor==, sê forte e corajoso; espera no Senhor.”",
+  "O tempo de Deus não falha. ==Não desista hoje.==",
+  "Se você vai esperar, ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "fonte_corpo": "cormorantgaramond-600.ttf",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "dir"
+ }
+}

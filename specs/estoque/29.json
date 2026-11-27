@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-29-lucas1",
+ "modelo": 1,
+ "titulo_leitura": "Lucas 1,37",
+ "texto": [
+  "^37 “==Para Deus nada é impossível.==”",
+  "Foi o que o anjo disse a Maria. ==Vale para você.==",
+  "Se você crê, ==escreva “Amém”==."
+ ],
+ "hl_cor": "azul",
+ "fonte_corpo": "cormorantgaramond-600.ttf",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "dir"
+ }
+}

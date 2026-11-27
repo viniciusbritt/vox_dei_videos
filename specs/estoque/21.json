@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-21-filipenses4",
+ "modelo": 1,
+ "titulo_leitura": "Filipenses 4,13",
+ "texto": [
+  "^13 “==Tudo posso naquele que me fortalece.==”",
+  "Sua força vem dele. ==Levante e siga.==",
+  "Se você crê, ==escreva “Amém”==."
+ ],
+ "hl_cor": "laranja",
+ "fonte_corpo": "lora-medium.ttf",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "dir"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-06-salmo37",
+ "modelo": 2,
+ "titulo_leitura": "Salmo 37,5",
+ "texto": [
+  "^5 “==Entrega o teu caminho ao Senhor==, confia nele, e ele tudo fará.”",
+  "Solte o que pesa. ==Deus assume daqui.==",
+  "Entregue agora: ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "fonte_corpo": "lora-medium.ttf",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "esq"
+ }
+}

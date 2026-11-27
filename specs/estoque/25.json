@@ -1,0 +1,16 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-25-proverbios3",
+ "modelo": 1,
+ "titulo_leitura": "Provérbios 3,5-6",
+ "texto": [
+  "^5 “==Confia no Senhor de todo o teu coração== e não te apoies no teu entendimento.”",
+  "Ele endireita os seus caminhos.",
+  "Se você confia, ==escreva “Amém”==."
+ ],
+ "hl_cor": "verde",
+ "fonte_corpo": "tinos-400.ttf"
+}

@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-09-salmo30",
+ "modelo": 1,
+ "titulo_leitura": "Salmo 30,6",
+ "texto": [
+  "^6 “O choro pode durar uma noite, ==mas a alegria vem pela manhã.==”",
+  "Essa fase vai passar. ==A sua manhã está chegando.==",
+  "Se você crê, ==escreva “Amém”==."
+ ],
+ "hl_cor": "laranja",
+ "fonte_corpo": "cormorantgaramond-600.ttf",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "dir"
+ }
+}

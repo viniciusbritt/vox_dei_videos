@@ -1,49 +1,66 @@
-# Agente diário da Vox Dei
+# Agente diário do canal "Salmos do Céu" (antes Vox Dei)
 
-Roda todo dia às 5h03 (Brasília). Produz e **agenda** os 3 Shorts do **dia seguinte** (7h, 12h e 20h). Desde 02/11/2026 (decisão da Helo).
-A Helo autorizou em 31/10/2026 agendar sem a aprovação dela. Ela é avisada depois e pode pedir mudanças pelo campo `recadoHelo` da agenda ou na conversa.
+> NOME NOVO (19/11, Helo): **Salmos do Céu**. Nos vídeos, títulos, descrições e marca d'água NÃO usar "Vox Dei" nem "Oração Católica"; usar "orar/oração" em vez de "rezar/reze". Detalhes em /mnt/project-files/mentor/NOME-DO-CANAL.md. Os nomes antigos abaixo (repo, Buffer, "Inscreva-se na Vox Dei") são só históricos: troque por "Salmos do Céu".
+
+
+Roda às 5h03 (Brasília) e cuida dos Shorts do **dia seguinte**. Leia só este arquivo; não precisa reler histórico de thread.
+Autorização: a Helo liberou agendar Shorts sem aprovação dela (31/10/2026). Exceção atual: ver "Frequência".
+
+## Frequência (a única parte que muda)
+
+| Modo | Shorts por dia | Horários |
+|---|---|---|
+| **Recuperação (ATUAL, desde 12/11)** | 1 | 7h, alternando Bíblia (dia par) e corte do longo (dia ímpar) |
+| Recuperado (3 dias seguidos >300 views em 24h, aviso do Tráfego) | 3 | 7h Bíblia, 12h corte, 20h corte |
+| Estável por 2 semanas | 4 | teste, a definir com a Helo |
+
+- Para mudar de modo, troque só a linha marcada **ATUAL**.
+- Cortes do longo chegam prontos da thread de cortes em `/mnt/project-files/cortes/AAAA-MM-DD/` (mp4 + jpg + título/descrição). O agente só agenda.
+- Buffer grátis = no máximo 10 agendados. Conte antes de agendar.
+- Rodada de sexta: se precisar adiantar o fim de semana, produza sábado a segunda e agende o que couber nos 10.
 
 ## Passo a passo
 
-1. `git pull` neste repositório. Leia os `specs/` dos últimos 14 dias para não repetir versículo, gancho, palavra em destaque nem frases.
-2. Leia a agenda (`config/semana` e `plano` em https://claude.ai/artifact/6pfcJwkDWtaFv9KspiVxVw) e veja se a Helo deixou `recadoHelo` ou mudou algum tema.
-3. Escreva 3 specs em `specs/`, cada um com o seu estilo fixo (Helo, 02/11/2026; estudo de design https://claude.ai/artifact/DhcC7adX4RarDuZq7SRhED):
-   - `AAAA-MM-DD-manha.json`, 7h, `"estilo": "gigante"` (variação 8: preto, letras condensadas enormes, destaque amarelo), `"particulas": false`. Tema do dia em `config/semana.dias` (dom Salmo 23, seg família, ter cura, qua Nossa Senhora, qui ansiedade, sex perdão, sáb proteção). Tom de começo de dia.
-   - `AAAA-MM-DD-meiodia.json`, 12h, `"estilo": "marca-texto"` (variação 4: branco, letras grossas, destaque com marca-texto amarelo), `"particulas": false`. Tema em `config/semana.meiodia` (dom gratidão pela semana, seg força no trabalho, ter gratidão, qua Ângelus, qui pão de cada dia, sex Sagrado Coração, sáb Anjo da Guarda). Tom de pausa no meio do dia.
-   - `AAAA-MM-DD-noite.json`, 20h, `"estilo": "manuscrito"` (variação 3: pergaminho, moldura dourada, letra capitular), `"particulas": "leve"`. Oração da noite (paz, sono, entrega, perdão, medo, ansiedade). Tom de fim de dia.
-   - O teste A/B de partículas acabou (Helo gostou): só a noite leva partículas, sempre leves.
-   - No estilo manuscrito a oração é reescrita automaticamente em parágrafo; comece o 1º parágrafo com uma letra (não aspas) para sair a capitular.
-4. Rode `python3 scripts/make_short.py specs/<spec>.json` para cada um (cerca de 5 min cada). Confira a capa gerada.
-5. `git add`, `commit` e `push` em `main`. O link do vídeo para o Buffer é
-   `https://raw.githubusercontent.com/viniciusbritt/vox_dei_videos/main/<saida>/<nome>.mp4`.
-6. No Buffer (canal YouTube "Vox Dei"), **agende** cada post (`mode: customScheduled`, `dueAt` 07:00, 12:00 e 20:00 com `-03:00`), com vídeo, título, descrição e hashtags. Se algo falhar, não agende pela metade: avise a Helo.
-7. Suba a capa na agenda (Artifact publish, `asset: true`) e grave `plano/AAAA-MM-DD` (7h), `plano/AAAA-MM-DD-meiodia` (12h) e `plano/AAAA-MM-DD-noite` (20h) com `etapa: "agendado"`, `estilo`, `capa`, `bufferPostId` e os demais campos.
-8. Mande para a Helo um aviso curto com as capas e os títulos do que foi agendado.
+0. Leia `/mnt/project-files/mentor/MODELO-DA-VEZ.md` (campeão, núcleo, testes e o que parar; atualizado pelo Mentor de canais dark). Não repita o gancho "PARE e reze comigo".
 
-## Formato do spec
+1. `git pull` em `main`. Liste os `specs/` dos últimos 14 dias (só `referencia`/`titulo_leitura`) para não repetir versículo.
+2. Leia na agenda (https://claude.ai/artifact/6pfcJwkDWtaFv9KspiVxVw, ArtifactData) só os docs `plano/<amanhã>*` e `recadoHelo`, se houver.
+3. Escreva o spec em `specs/AAAA-MM-DD-manha.json` (12h = `-meiodia`, 20h = `-noite`) e rode `python3 scripts/make_short.py specs/<spec>.json`. Confira a capa.
+4. `git add`, `commit` e `push` em `main`. Link para o Buffer: `https://raw.githubusercontent.com/viniciusbritt/vox_dei_videos/main/<saida>/<nome>.mp4`.
+5. Buffer (org `6ae2bc4082663d76d494c180`, canal YouTube Vox Dei `6ae66aff2f1f5ed648384566`): `create_post`, `mode: customScheduled`, `dueAt` com `-03:00`. Se algo falhar, não agende pela metade e avise a Helo.
+6. Agenda: suba **só a capa** (Artifact publish, `url` da agenda, `asset: true`) e grave `plano/<dia>` num único batch com `etapa: "agendado"`, `capa: "/_blob/<id>"`, `bufferPostId`, `titulo`, `versiculo`, `estilo`, `arquivo` (link raw do mp4). Não suba o mp4.
+7. Aviso à Helo: 1 linha com o título e o horário. Se só conferiu e está tudo certo, não mande nada.
+
+## Estilo atual dos Shorts (Bíblia)
+
+- `"estilo": "biblia-foto"`, `"duracao": 20`, `"particulas": "leve"`, `"modelo"` 1 a 4 alternando a cada vídeo (papel, fonte e enquadramento variados: o canal caiu por repetição em massa).
+- Texto curto e letra grande: versículo + no máximo 2 frases curtas + pedido de Amém (35 a 45 palavras), com 1 a 3 trechos `==grifados==` em amarelo.
+- Tradução católica, citação com vírgula (Salmo 4,9). Público católico: pode Nossa Senhora, santos, Anjo da Guarda. pt-BR sempre.
 
 ```json
-{
-  "nome": "2026-11-02-manha-familia",
-  "saida": "shorts/2026-11",
-  "gancho_antes": "Você pediu um sinal de",
-  "destaque": "DEUS",
-  "gancho_depois": "Aqui está.",
-  "oracao": [["linha 1", "linha 2"], ["linha 3", "linha 4"]],
-  "referencia": "Salmo 127,1",
-  "cta": "Escreva AMÉM se você recebe esta oração",
-  "estilo": "gigante",
-  "particulas": false
-}
+{"nome": "2026-11-20-manha-salmo23", "saida": "shorts/2026-11", "estilo": "biblia-foto", "duracao": 20, "modelo": 2,
+ "titulo_leitura": "Salmo 23,1", "texto": ["O Senhor é o meu pastor, ==nada me faltará==.", "..."], "particulas": "leve"}
 ```
 
-- `destaque`: uma palavra curta em maiúsculas (DEUS, JESUS, MARIA, AMÉM, PAZ...). Varie entre os dias.
-- No máximo 11 linhas de oração, até cerca de 32 caracteres por linha. O script reduz a fonte para caber e para com erro se o texto não couber acima da área do título.
-- Plano grátis do Buffer segura 10 agendados: com 3 por dia, não agende mais que o dia seguinte.
-- Público católico: pode usar Ave-Maria, Nossa Senhora, santos e o Anjo da Guarda. Cite os versículos corretamente (numeração da Bíblia católica, com vírgula: Salmo 4,9).
+O estilo `biblia` (página clara com grifo animado) continua disponível no gerador; exemplo em `specs/2026-11-06-manha.json`.
 
-## Copy (o que mais deu alcance)
+## Copy
 
-- **Título:** o gancho do vídeo, com a palavra em destaque em maiúsculas + emoji + versículo + `#shorts`. Até 100 caracteres. Exemplo: `Você pediu um sinal de DEUS? Reze esta oração 🙏 Salmo 51,12 #shorts`.
-- **Descrição:** 1ª linha com urgência ("Não passe sem rezar", "Deus colocou esta oração no seu caminho"), o versículo completo, depois "Escreva AMÉM...", "Deixe o nome de quem..." e "Inscreva-se na Vox Dei...". No fim, de 5 a 6 hashtags (#oração #oraçãocatólica #salmoX #catolicos #shorts).
-- YouTube: `categoryId` "22", `madeForKids` false, `isAiGenerated` false (o vídeo não tem cena realista).
+- **Título:** gancho com 1 palavra em MAIÚSCULAS + emoji + versículo + `#shorts` (até 100 caracteres). Ex.: `Você pediu um sinal de DEUS? Reze esta oração 🙏 Salmo 51,12 #shorts`.
+- **Descrição:** 1ª linha com urgência, versículo completo, "Escreva AMÉM...", "Deixe o nome de quem...", "Inscreva-se na Vox Dei...", 5 a 6 hashtags (#oração #oraçãocatólica #salmoX #catolicos #shorts).
+- YouTube: `categoryId` "22", `madeForKids` false, `isAiGenerated` false. O Buffer NÃO define idioma nem tags: a thread de SEO corrige para pt-BR e põe as tags no lote noturno (aviso de 15/11).
+
+## Formato novo: oração na íntegra (desde 12/11)
+
+- Pedido da Helo (11/11) para quebrar o molde Bíblia: oração inteira rezada por voz calma, texto que acende palavra por palavra, fundo escuro com luz de vela, gancho "Pare um instante" no 1º quadro e CTA "escreva Amém". Cerca de 40 s.
+- Gerador: `python3 scripts/make_oracao.py specs/<spec>.json` (exemplo: `specs/2026-11-12-manha-oracao.json`). Voz por `edge-tts` (`pip install edge-tts`), fica em `<saida>/voz/`. Render demora ~8 min.
+- 1º vídeo: São Miguel Arcanjo, 12/11 7h. Ver o resultado antes de repetir o formato.
+
+## Fila do Facebook (pedido da Helo, 19/11)
+Ao AGENDAR qualquer Short (corte ou Bíblia no molde Fábio), acrescente uma linha em `/mnt/project-files/facebook/FILA-FACEBOOK.md`: arquivo mp4, título, link do YouTube (e data/hora). NÃO poste no Facebook: quem posta é a thread "Aquecer página do Facebook".
+
+## Limite de uploads por dia (regra da Helo, 23/11/2026)
+A cota diária da API do YouTube é de 10.000 pontos (zera ~5h de Brasília). Cada upload de vídeo custa 1.600 pontos; resposta a comentário, capa, tags e playlist custam 50. **No máximo 5 uploads por dia** pela API (somando Shorts, longos e cortes). Lotes grandes devem ser divididos em dois ou mais dias. Ver cota-api-youtube na memória do projeto.
+
+## Título dos Bíblias das 7h (Mentor, 24/11)
+Manter o molde Fábio e colocar "Escreva AMÉM" no TÍTULO (ex.: `Marcos 11,24 🙏 Escreva AMÉM`). Com isso o Marcos 11,24 teve 11,4 comentários/mil views contra 4,5 do Êxodo 14,14 (sem o pedido no título).

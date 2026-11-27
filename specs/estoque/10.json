@@ -1,0 +1,16 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-10-salmo121",
+ "modelo": 2,
+ "titulo_leitura": "Salmo 121,1-2",
+ "texto": [
+  "^1 “Elevo os olhos para os montes: de onde me virá o socorro? ^2 ==O meu socorro vem do Senhor.==”",
+  "Olhe para o alto hoje.",
+  "Se você confia, ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "fonte_corpo": "tinos-400.ttf"
+}

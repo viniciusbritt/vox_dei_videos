@@ -1,0 +1,16 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-15-joao3",
+ "modelo": 3,
+ "titulo_leitura": "João 3,16",
+ "texto": [
+  "^16 “==Deus amou tanto o mundo que deu o seu Filho único==, para que todo o que nele crê tenha a vida eterna.”",
+  "Esse amor é para você.",
+  "==Escreva “Amém”==."
+ ],
+ "hl_cor": "laranja",
+ "fonte_corpo": "tinos-400.ttf"
+}

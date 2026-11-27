@@ -1,0 +1,16 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-20-romanos8b",
+ "modelo": 4,
+ "titulo_leitura": "Romanos 8,31",
+ "texto": [
+  "^31 “==Se Deus é por nós, quem será contra nós?==”",
+  "Nenhuma luta é maior que Ele.",
+  "Se Deus é por você, ==escreva “Amém”==."
+ ],
+ "hl_cor": "rosa",
+ "fonte_corpo": "tinos-400.ttf"
+}

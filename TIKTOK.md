@@ -1,5 +1,12 @@
 # Shorts da Vox Dei no TikTok
 
+**Modo atual (desde 06/11/2026, decisão da Helo): a Helo agenda À MÃO no TikTok Studio.** O Claude só prepara os vídeos e as legendas, em LOTE: copia os mp4 para `/mnt/project-files/tiktok/lote-<datas>/` com nomes `NN_DIA-DD-MM_HHMM_manha|noite_Tema_Versiculo.mp4` e escreve `LEGENDAS-<datas>.md` (uma legenda por bloco de código), mais um .zip. 2 por dia: **08h45** e **17h45**. Não repetir vídeo nem versículo que já saiu no TikTok; vídeo que fala "meio-dia" não entra. Grava na agenda `tiktok: "kit enviado"`, `tiktokHora`, `tiktokLegenda`. O TikTok só agenda até 10 dias à frente.
+
+O passo a passo abaixo (agendar sozinho pelo navegador) fica de reserva, caso a Helo volte a pedir.
+
+---
+
+
 Todo dia às **20h30 (Brasília)**, numa tarefa agendada no app Claude do PC da Helo (horário em que o PC fica ligado), **2 Shorts do dia seguinte** são agendados no **TikTok**, pelo **TikTok Studio no navegador do app** (não pelo Buffer). Pedido da Helo em 03/11/2026, que autorizou fazer isso todo dia sem aprovação.
 
 - **08h45**: o Short da manhã (`AAAA-MM-DD-manha.json`).

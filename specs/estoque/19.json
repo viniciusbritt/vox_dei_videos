@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-19-romanos8",
+ "modelo": 3,
+ "titulo_leitura": "Romanos 8,28",
+ "texto": [
+  "^28 “==Tudo concorre para o bem daqueles que amam a Deus.==”",
+  "Até isso que você vive agora. ==Confie.==",
+  "Se você ama a Deus, ==escreva “Amém”==."
+ ],
+ "hl_cor": "verde",
+ "fonte_corpo": "cormorantgaramond-600.ttf",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "esq"
+ }
+}

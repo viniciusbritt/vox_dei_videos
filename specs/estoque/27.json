@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-27-hebreus13",
+ "modelo": 3,
+ "titulo_leitura": "Hebreus 13,5",
+ "texto": [
+  "^5 “==Nunca te deixarei, jamais te abandonarei.==”",
+  "Mesmo quando ninguém fica, ==Ele fica.==",
+  "Se você sente, ==escreva “Amém”==."
+ ],
+ "hl_cor": "laranja",
+ "fonte_corpo": "librebaskerville-400.ttf",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "esq"
+ }
+}

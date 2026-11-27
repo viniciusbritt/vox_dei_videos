@@ -1,0 +1,19 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-23-isaias43",
+ "modelo": 3,
+ "titulo_leitura": "Isaías 43,2",
+ "texto": [
+  "^2 “==Quando passares pelas águas, estarei contigo.==”",
+  "Nenhuma tempestade te leva. ==Ele está junto.==",
+  "Se você crê, ==escreva “Amém”==."
+ ],
+ "hl_cor": "azul",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "esq"
+ }
+}

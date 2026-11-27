@@ -1,0 +1,16 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-05-salmo34",
+ "modelo": 1,
+ "titulo_leitura": "Salmo 34,19",
+ "texto": [
+  "^19 “==O Senhor está perto dos que têm o coração quebrado.==”",
+  "Ele vê a sua dor. ==E não vai te deixar.==",
+  "Se você precisa dele, ==escreva “Amém”==."
+ ],
+ "hl_cor": "azul",
+ "fonte_corpo": "tinos-400.ttf"
+}

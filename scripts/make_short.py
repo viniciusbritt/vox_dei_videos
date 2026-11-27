@@ -81,35 +81,58 @@ def layers_from_spec(spec):
 
 
 def piano(path, seed):
+    """Piano devocional e esperançoso (tons maiores, termina resolvido no I). Pedido da Helo em 03/11."""
     rng = np.random.default_rng(seed)
     sr = 44100; N = sr * DUR; out = np.zeros(N)
     mid = lambda m: 440 * 2 ** ((m - 69) / 12)
-    progs = [[[57, 64, 69, 72], [53, 60, 65, 69], [48, 55, 60, 64], [55, 62, 67, 71]],   # Am F C G
-             [[48, 55, 60, 64], [55, 62, 67, 71], [57, 64, 69, 72], [53, 60, 65, 69]],   # C G Am F
-             [[50, 57, 62, 65], [55, 62, 67, 71], [48, 55, 60, 64], [57, 64, 69, 72]],   # Dm G C Am
-             [[53, 60, 65, 69], [48, 55, 60, 64], [55, 62, 67, 71], [57, 64, 69, 72]]]   # F C G Am
-    prog = progs[int(rng.integers(len(progs)))]
-    tempo = float(rng.uniform(0.56, 0.68))
+    # graus em tom maior (semitons a partir da tônica): I, IV, V, vi
+    I, IV, V, vi = [0, 4, 7], [5, 9, 12], [7, 11, 14], [9, 12, 16]
+    progs = [[I, V, vi, IV], [I, IV, I, V], [I, vi, IV, V], [IV, I, V, I]]
+    prog = progs[int(rng.integers(len(progs)))] + [I]          # sempre fecha na tônica
+    key = 60 + int(rng.choice([0, 2, 5, 7, -5]))               # Dó, Ré, Fá, Sol ou Sol grave
+    beat = float(rng.uniform(0.50, 0.58))
 
-    def note(f, t0, dur, amp):
-        s = int(t0 * sr); n = min(int(dur * sr), N - s)
+    def note(f, t0, dur, amp, bright=1.0, attack=200):
+        s_ = int(t0 * sr); n = min(int(dur * sr), N - s_)
         if n <= 0:
             return
         tt = np.arange(n) / sr
-        env = np.exp(-tt * 1.6) * (1 - np.exp(-tt * 200))
-        out[s:s + n] += amp * env * sum(a * np.sin(2 * np.pi * f * k * tt) for k, a in [(1, 1), (2, .35), (3, .12), (4, .05)])
-    t0 = 0.2
-    for bar in range(5):
-        ch = prog[bar % 4]
-        note(mid(ch[0] - 12), t0, 4.0, 0.22)
-        for j, m in enumerate([ch[1], ch[2], ch[3], ch[2], ch[3] + 12 if bar % 2 else ch[3], ch[2]]):
-            note(mid(m), t0 + j * tempo, 3.0, 0.12)
-        t0 += tempo * 6.3
-    for dl, g in [(0.11, .35), (0.23, .25), (0.37, .18), (0.53, .12)]:
-        k = int(dl * sr); out[k:] += g * out[:-k]
-    fl = int(1.5 * sr); out[-fl:] *= np.linspace(1, 0, fl)
-    out = out / np.abs(out).max() * 0.6
-    st = np.stack([out, np.roll(out, int(0.012 * sr))], 1)
+        env = np.exp(-tt * 1.1) * (1 - np.exp(-tt * attack))
+        out[s_:s_ + n] += amp * env * sum(a * np.sin(2 * np.pi * f * k * tt)
+                                          for k, a in [(1, 1), (2, .45 * bright), (3, .18 * bright), (4, .06 * bright)])
+
+    def pad(chord, t0, dur, amp):
+        s_ = int(t0 * sr); n = min(int(dur * sr), N - s_)
+        if n <= 0:
+            return
+        tt = np.arange(n) / sr
+        env = np.minimum(tt / 0.9, 1) * np.minimum((dur - tt) / 0.9, 1)
+        for m in chord:
+            f = mid(key + m - 12)
+            out[s_:s_ + n] += amp * env * (np.sin(2 * np.pi * f * tt) + .3 * np.sin(2 * np.pi * f * 2.003 * tt))
+
+    t0 = 0.15; bar_len = beat * 6
+    for i, ch in enumerate(prog):
+        last = i == len(prog) - 1
+        note(mid(key + ch[0] - 12), t0, bar_len * 1.2, 0.16, 0.6)            # baixo suave
+        pad(ch, t0, bar_len + 0.6, 0.025)                                   # cama quente
+        arp = [ch[0], ch[1], ch[2], ch[0] + 12, ch[2], ch[1]]
+        for j, m in enumerate(arp if not last else arp[:4]):
+            note(mid(key + m), t0 + j * beat, 2.4, 0.10)
+        top = ch[1] + 12 if i % 2 == 0 else ch[2] + 12                     # melodia simples no agudo
+        note(mid(key + top), t0 + 0.02, 2.8, 0.07, 1.3)
+        note(mid(key + (ch[0] + 12 if last else ch[2] + 12)), t0 + beat * 3, 2.8, 0.06, 1.3)
+        t0 += bar_len
+        if t0 > DUR - 1.2:
+            break
+    # reverb difusa (muitos ecos curtos e fracos, sem efeito de "eco de suspense")
+    dry = out.copy(); r = np.random.default_rng(seed + 7)
+    for _ in range(14):
+        k = int(r.uniform(0.025, 0.16) * sr); g = r.uniform(0.05, 0.13)
+        out[k:] += g * dry[:-k]
+    fl = int(1.8 * sr); out[-fl:] *= np.linspace(1, 0, fl) ** 1.5
+    out = out / np.abs(out).max() * 0.55
+    st = np.stack([out, np.roll(out, int(0.009 * sr))], 1)
     with wave.open(path, "wb") as w_:
         w_.setnchannels(2); w_.setsampwidth(2); w_.setframerate(sr)
         w_.writeframes((st * 32767).astype(np.int16).tobytes())
@@ -132,11 +155,20 @@ def main(spec_path):
     spec = json.load(open(spec_path, encoding="utf-8"))
     outdir = os.path.join(ROOT, spec["saida"]); os.makedirs(outdir, exist_ok=True)
     name = spec["nome"]; seed = zlib.crc32(name.encode())
+    global DUR
+    DUR = int(spec.get("duracao", DUR))
     estilo = spec.get("estilo", "pergaminho")
     if estilo == "gigante":
         BG, layers = estilos.gigante(spec, seed)
     elif estilo == "marca-texto":
         BG, layers = estilos.marca_texto(spec, seed)
+    elif estilo == "biblia-foto":       # Helo 04/11: foto parada, sem fade nem animação, só partículas e música
+        import biblia_foto
+        BG, modelo = biblia_foto.render(spec, seed); layers = []
+        spec.setdefault("particulas", "leve")
+        print("modelo de página:", modelo)
+    elif estilo == "biblia":
+        BG, layers = estilos.biblia(spec, seed)
     elif estilo == "manuscrito":
         BG, layers = estilos.manuscrito(spec, seed, background)
     else:
@@ -160,16 +192,29 @@ def main(spec_path):
         t = i / FPS; z = 1.0 + 0.04 * t / DUR
         cw, ch = min(int(W * 1.05 / z), BW), min(int(H * 1.05 / z), BH)
         x0, y0 = (BW - cw) // 2, (BH - ch) // 2
-        fr = np.asarray(Image.fromarray(BG[y0:y0 + ch, x0:x0 + cw]).resize((W, H), Image.BILINEAR)).astype(np.float32)
+        if BG.shape[:2] == (H, W):      # fundo fixo (biblia-foto): sem zoom, para o texto não escorregar
+            fr = BG.astype(np.float32)
+        else:
+            fr = np.asarray(Image.fromarray(BG[y0:y0 + ch, x0:x0 + cw]).resize((W, H), Image.BILINEAR)).astype(np.float32)
         if P is not None:
             pl = particles_layer(t, P) * P_ALPHA
             fr = fr * (1 - pl) + np.array([200, 132, 38]) * pl
-        for st, Lr in layers:
+        for item in layers:
+            st, Lr = item[0], item[1]
             if t < st:
                 continue
-            a = min(1, (t - st) / 0.8); a = a * a * (3 - 2 * a)
-            al = Lr[..., 3:4] / 255 * a; fr = fr * (1 - al) + Lr[..., :3] * al
-        fr *= min(1, t / 0.3 + 0.0001)
+            if len(item) > 2:          # marca-texto passando da esquerda para a direita
+                p = min(1, max(0, (t - st - 0.5) / 0.9))
+                if p <= 0:
+                    continue
+                m = (np.arange(W) < p * W).astype(np.float32)[None, :, None]
+                al = Lr[..., 3:4] / 255 * m
+            else:
+                a = min(1, (t - st) / 0.8); a = a * a * (3 - 2 * a)
+                al = Lr[..., 3:4] / 255 * a
+            fr = fr * (1 - al) + Lr[..., :3] * al
+        if estilo != "biblia-foto":
+            fr *= min(1, t / 0.3 + 0.0001)
         frame = np.clip(fr, 0, 255).astype(np.uint8)
         ff.stdin.write(frame.tobytes())
         if i == FPS * 8 or os.environ.get("SO_QUADRO"):

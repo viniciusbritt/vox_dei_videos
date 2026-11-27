@@ -1,0 +1,16 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-30-salmo103",
+ "modelo": 2,
+ "titulo_leitura": "Salmo 103,2",
+ "texto": [
+  "^2 “==Bendize, ó minha alma, ao Senhor==, e não esqueças nenhum dos seus benefícios.”",
+  "Agradeça uma coisa hoje. ==Deus já fez muito.==",
+  "Se você agradece, ==escreva “Amém”==."
+ ],
+ "hl_cor": "amarelo",
+ "fonte_corpo": "tinos-400.ttf"
+}

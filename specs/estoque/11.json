@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-11-mateus7",
+ "modelo": 3,
+ "titulo_leitura": "Mateus 7,7",
+ "texto": [
+  "^7 “==Pedi e vos será dado;== buscai e achareis; batei e vos será aberto.”",
+  "Não pare de bater à porta. ==Deus ouve.==",
+  "Faça seu pedido e ==escreva “Amém”==."
+ ],
+ "hl_cor": "azul",
+ "fonte_corpo": "lora-medium.ttf",
+ "caneta": {
+  "tipo": "marca-texto",
+  "lado": "esq"
+ }
+}

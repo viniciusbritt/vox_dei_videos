@@ -1,0 +1,12 @@
+{"nome": "2026-11-12-manha-oracao-sao-miguel", "saida": "shorts/2026-11", "voz": "pt-BR-AntonioNeural", "rate": "-12%",
+ "titulo_topo": "ORAÇÃO A SÃO MIGUEL ARCANJO", "subtitulo_topo": "reze comigo, em voz baixa",
+ "blocos": [
+  {"tipo": "gancho", "texto": "Pare um instante. Reze comigo a oração de São Miguel Arcanjo, pela proteção da sua casa."},
+  {"tipo": "oracao", "texto": "São Miguel Arcanjo, defendei-nos no combate."},
+  {"tipo": "oracao", "texto": "Sede o nosso refúgio contra as maldades e ciladas do demônio."},
+  {"tipo": "oracao", "texto": "Ordene-lhe Deus, instantemente o pedimos."},
+  {"tipo": "oracao", "texto": "E vós, Príncipe da milícia celeste, pela virtude divina,"},
+  {"tipo": "oracao", "texto": "precipitai no inferno a Satanás e aos outros espíritos malignos,"},
+  {"tipo": "oracao", "texto": "que andam pelo mundo para perder as almas. Amém."},
+  {"tipo": "cta", "texto": "Se você rezou comigo, escreva Amém."}
+ ]}

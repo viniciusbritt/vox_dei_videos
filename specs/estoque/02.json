@@ -1,0 +1,20 @@
+{
+ "saida": "shorts/estoque",
+ "estilo": "biblia-foto",
+ "duracao": 20,
+ "particulas": "leve",
+ "nome": "estoque-02-salmo91",
+ "modelo": 2,
+ "titulo_leitura": "Salmo 91,11",
+ "texto": [
+  "^11 “==Ele dará ordens aos seus anjos== para que te guardem em todos os teus caminhos.”",
+  "Você não está sozinho. ==Há proteção sobre a sua casa.==",
+  "Receba, ==escreva “Amém”==."
+ ],
+ "hl_cor": "rosa",
+ "fonte_corpo": "librebaskerville-400.ttf",
+ "caneta": {
+  "tipo": "caneta",
+  "lado": "esq"
+ }
+}
