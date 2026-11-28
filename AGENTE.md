@@ -67,3 +67,5 @@ Manter o molde Fábio e colocar "Escreva AMÉM" no TÍTULO (ex.: `Marcos 11,24 �
 
 ## Toda data vai para a agenda da Helo (regra permanente, 25/11/2026)
 A Helo abre a agenda (https://claude.ai/artifact/6pfcJwkDWtaFv9KspiVxVw) todo dia. Sempre que você citar uma data à Helo (teste, prazo, revisão, algo que ela deve fazer, resultado que será lido), grave na mesma hora um doc em `plano` com `formato: "teste"`: doc_id `AAAA-MM-DD-teste-HHMM-<slug>`, campos `data`, `hora`, `titulo`, `etapa` ("marcado" ou "feito"), opcional `nota`. Passo a passo em /mnt/project-files/producao/AGENDA-YOUTUBE.md (seção "Testes e avisos com data"). Postagens do YouTube/Facebook/TikTok já entram pelos seus fluxos; esta regra cobre o resto.
+
+> Atenção: não apagar nem renomear a branch `claude/project-thread-0fzddr` antes de 30/11/2026 19h30 (BRT). O Buffer baixa o vídeo do TikTok por link raw dela.
